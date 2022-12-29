@@ -16,19 +16,31 @@ def user_input_features():
     st.write("""**You selected this option **""",age)
     
     st.write("""**2. Select Gender :**""")
-    sex = st.selectbox("(1=Male, 0=Female)",["1","0"])
+    gender = st.selectbox("(Male or Female)",["Male","Female"])
 
-    gender = ""
-    if sex == "1":
-        gender = "Male"
+
+    
+    if gender == "Male":
+        sex = 1
         st.write("""**You selected this option **""", gender)
     else:
-        gender = "Female"
+        sex = 0
         st.write("""**You selected this option **""", gender)
 
     st.write("""**3. Select Chest Pain Type :**""")
-    cp = st.selectbox("(1 = Typical Angina, 2 = Atypical Angina, 3 = Non—anginal Pain, 4 = Asymptotic) : ",["1","2","3","4"])
-    st.write("""**You selected this option **""",cp)
+    cp_str = st.selectbox("(Typical Angina, Atypical Angina, Non—anginal Pain, or Asymptotic)",["Typical Angina", "Atypical Angina", "Non—anginal Pain", "Asymptotic"])
+    st.write("""**You selected this option **""",cp_str)
+    
+    cp = 0
+    
+    if cp_str == "Typical Angina":
+      cp = 1
+    elif cp_str == "Atypical Angina":
+      cp = 2
+    elif cp_str == "Non-anginal Pain":
+      cp = 3
+    else:
+      cp = 4
     
     st.write("""**4. Select Resting Blood Pressure :**""")
     trestbps = st.slider('In mm/Hg unit', 0, 200, 110)
@@ -43,8 +55,15 @@ def user_input_features():
     st.write("""**You selected this option **""",thalach)
     
     st.write("""**7. Exercise Induced Angina (Pain in chest while exersice) :**""")
-    exang = st.selectbox("(1=Yes, 0=No)",["1","0"])
-    st.write("""**You selected this option **""",exang)
+    exang_str = st.selectbox("(Yes or No)", ["Yes","No"])
+    st.write("""**You selected this option **""",exang_str)
+    
+    exang = 0
+    
+    if exang_str == "Yes":
+      exang = 1
+    else:
+      exang = 0
     
     st.write("""**8. Oldpeak (ST depression induced by exercise relative to rest) :**""")
     oldpeak = float(st.slider('', 0.0, 10.0, 2.0))
@@ -59,9 +78,17 @@ def user_input_features():
     st.write("""**You selected this option **""",ca)
     
     st.write("""**11. Thal :**""")
-    thal = float(st.slider('3 = normal; 6 = fixed defect; 7 = reversable defect', 0.0, 10.0, 3.0))
-    st.write("""**You selected this option **""",thal)
+    thal_str = st.selectbox("(Normal, Fixed Defect, or Reversable Defect)", ["Normal", "Fixed Defect", "Reversable Defect"])
+    st.write("""**You selected this option **""",thal_str)
     
+    thal= 0
+    
+    if thal_str == "Normal":
+      thal = 3
+    elif thal_str == "Fixed Defect":
+      thal = 6
+    else:
+      thal = 7
     
     data = {'age': age, 'sex': sex, 'cp': cp, 'trestbps': trestbps, 'chol': chol, 'thalach': thalach, 'exang': exang, 'oldpeak': oldpeak, 'slope': slope, 'ca': ca, 'thal': thal,}
     features = pd.DataFrame(data, index=[0])
