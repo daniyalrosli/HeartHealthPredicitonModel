@@ -55,15 +55,11 @@ def user_input_features():
     thal = st.slider('', 0.0, 10.0, 5.0)
     st.write("""**You selected this option **""",thal)
     
-    if thal_str == "Normal":
-      thal = 3
-    elif thal_str == "Fixed Defect":
-      thal = 6
-    else:
-      thal = 7
     
     data = {'age': age, 'sex': sex_str, 'cp': cp_str, 'trestbps': trestbps, 'chol': chol, 'thalach': thalach, 'exang': exang_str, 'oldpeak': oldpeak, 'slope': slope, 'ca': ca, 'thal': thal,}
-    
+    features_str = pd.DataFrame(data, index=[0])
+    st.subheader('Given Inputs : ')
+    st.write(features_str)
     ##Convert to numerical inputs 
     ##Gender
     sex = ""
@@ -91,15 +87,13 @@ def user_input_features():
     else:
       exang = "0"
 
-    
+    ##Array of numerical inputs for model to run
     data_num = {'age': age, 'sex': sex, 'cp': cp, 'trestbps': trestbps, 'chol': chol, 'thalach': thalach, 'exang': exang, 'oldpeak': oldpeak, 'slope': slope, 'ca': ca, 'thal': thal,}
     features = pd.DataFrame(data_num, index=[0])
     return features
 
-
+##User input 
 df = user_input_features()
-st.subheader('Given Inputs : ')
-st.write(df)
 
 heart = pd.read_csv("HeartDisease.csv")
 X = heart.iloc[:,0:11].values
