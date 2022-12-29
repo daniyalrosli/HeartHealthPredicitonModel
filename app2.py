@@ -16,19 +16,12 @@ def user_input_features():
     st.write("""**You selected this option **""",age)
     
     st.write("""**2. Select Gender :**""")
-    sex = st.selectbox("(1=Male, 0=Female)",["1","0"])
-
-    gender = ""
-    if sex == "1":
-        gender = "Male"
-        st.write("""**You selected this option **""", gender)
-    else:
-        gender = "Female"
-        st.write("""**You selected this option **""", gender)
+    sex_str = st.selectbox("(Male or Female)",["Male","Female"])
+    st.write("""**You selected this option **""", sex_str)
 
     st.write("""**3. Select Chest Pain Type :**""")
-    cp = st.selectbox("(1 = Typical Angina, 2 = Atypical Angina, 3 = Non—anginal Pain, 4 = Asymptotic) : ",["1","2","3","4"])
-    st.write("""**You selected this option **""",cp)
+    cp_str = st.selectbox("(Typical Angina, Atypical Angina, Non—anginal Pain, or Asymptotic)",["Typical Angina", "Atypical Angina", "Non—anginal Pain", "Asymptotic"])
+    st.write("""**You selected this option **""",cp_str)
     
     st.write("""**4. Select Resting Blood Pressure :**""")
     trestbps = st.slider('In mm/Hg unit', 0, 200, 110)
@@ -43,8 +36,8 @@ def user_input_features():
     st.write("""**You selected this option **""",thalach)
     
     st.write("""**7. Exercise Induced Angina (Pain in chest while exersice) :**""")
-    exang = st.selectbox("(1=Yes, 0=No)",["1","0"])
-    st.write("""**You selected this option **""",exang)
+    exang_str = st.selectbox("(Yes or No)", ["Yes","No"])
+    st.write("""**You selected this option **""",exang_str)
     
     st.write("""**8. Oldpeak (ST depression induced by exercise relative to rest) :**""")
     oldpeak = float(st.slider('', 0.0, 10.0, 2.0))
@@ -59,13 +52,44 @@ def user_input_features():
     st.write("""**You selected this option **""",ca)
     
     st.write("""**11. Thal :**""")
-    thal = float(st.slider('3 = normal; 6 = fixed defect; 7 = reversable defect', 0.0, 10.0, 3.0))
+    thal = st.slider('', 0.0, 10.0, 5.0)
     st.write("""**You selected this option **""",thal)
     
     
-    data = {'age': age, 'sex': sex, 'cp': cp, 'trestbps': trestbps, 'chol': chol, 'thalach': thalach, 'exang': exang, 'oldpeak': oldpeak, 'slope': slope, 'ca': ca, 'thal': thal,}
-    features = pd.DataFrame(data, index=[0])
+    data = {'age': age, 'sex': sex_str, 'cp': cp_str, 'trestbps': trestbps, 'chol': chol, 'thalach': thalach, 'exang': exang_str, 'oldpeak': oldpeak, 'slope': slope, 'ca': ca, 'thal': thal,}
+    
+    ##Convert to numerical inputs 
+    ##Gender
+    sex = ""
+    if sex_str == "Male":
+        sex = "1"
+    else:
+        sex = "0"
+
+    ##Chest Pain    
+    cp = ""
+    if cp_str == "Typical Angina":
+      cp = "1"
+    elif cp_str == "Atypical Angina":
+      cp = "2"
+    elif cp_str == "Non-anginal Pain":
+      cp = "3"
+    else:
+      cp = "4"
+
+    ##Exersize induced angina
+    exang = ""
+    
+    if exang_str == "Yes":
+      exang = "1"
+    else:
+      exang = "0"
+
+    
+    data_num = {'age': age, 'sex': sex, 'cp': cp, 'trestbps': trestbps, 'chol': chol, 'thalach': thalach, 'exang': exang, 'oldpeak': oldpeak, 'slope': slope, 'ca': ca, 'thal': thal,}
+    features = pd.DataFrame(data_num, index=[0])
     return features
+
 
 df = user_input_features()
 st.subheader('Given Inputs : ')
