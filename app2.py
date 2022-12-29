@@ -2,10 +2,13 @@ import streamlit as st
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
-st.write(""" # Heart Disease Prediction App
-This app predicts that *the person has heart disease or not* 
+st.write(""" # Heart Disease Risk Prediction App
+This app predicts your risk for heart disease given several parameters 
 """)
 
+
+##User inputs for the model
+##Sliders and dropdowns 
 def user_input_features():
     
     st.write("""**1. Select Age :**""") 
@@ -14,8 +17,15 @@ def user_input_features():
     
     st.write("""**2. Select Gender :**""")
     sex = st.selectbox("(1=Male, 0=Female)",["1","0"])
-    st.write("""**You selected this option **""",sex)
-    
+
+    gender = ""
+    if sex == "1":
+        gender = "Male"
+        st.write("""**You selected this option **""", gender)
+    else:
+        gender = "Female"
+        st.write("""**You selected this option **""", gender)
+
     st.write("""**3. Select Chest Pain Type :**""")
     cp = st.selectbox("(1 = Typical Angina, 2 = Atypical Angina, 3 = Non—anginal Pain, 4 = Asymptotic) : ",["1","2","3","4"])
     st.write("""**You selected this option **""",cp)
