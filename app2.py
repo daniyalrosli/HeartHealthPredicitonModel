@@ -55,6 +55,12 @@ def user_input_features():
     thal = st.slider('', 0.0, 10.0, 5.0)
     st.write("""**You selected this option **""",thal)
     
+    if thal_str == "Normal":
+      thal = 3
+    elif thal_str == "Fixed Defect":
+      thal = 6
+    else:
+      thal = 7
     
     data = {'age': age, 'sex': sex_str, 'cp': cp_str, 'trestbps': trestbps, 'chol': chol, 'thalach': thalach, 'exang': exang_str, 'oldpeak': oldpeak, 'slope': slope, 'ca': ca, 'thal': thal,}
     
