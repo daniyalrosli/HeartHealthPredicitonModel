@@ -7,9 +7,9 @@ from scipy import stats
 import streamlit as st
 import sklearn as sklearn
 
+st.header("Exploratory Data Analytics")
 
-
-st.header("On this page we will walkthrough our data analytics process as we worked towards building our model for the Asian Heart Health Model")
+st.write("On this page we will walkthrough our data analytics process as we worked towards building our model for the Asian Heart Health Model")
 
 st.write("First lets load in our data set and filter by race = 'Asian'")
 ##Loading Data
