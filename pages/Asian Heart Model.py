@@ -172,11 +172,12 @@ target = newdf.iloc[:,[0]].values
 ##st.write(param)
 ##st.write(target)
 
+
 model = ExtraTreesClassifier()
 model.fit(param, target)
 
 prediction = model.predict(user)
-st.subheader('Prediction :')
+st.subheader('Prediction using ExtraTreesClassifier:')
 df1=pd.DataFrame(prediction,columns=['0'])
 df1.loc[df1['0'] == 0, 'Chances of Heart Disease'] = 'No'
 df1.loc[df1['0'] == 1, 'Chances of Heart Disease'] = 'Yes'
@@ -190,7 +191,7 @@ model = RandomForestClassifier()
 model.fit(param, target)
 
 prediction = model.predict(user)
-st.subheader('Prediction :')
+st.subheader('Prediction using RandomForestClassifer:')
 df1=pd.DataFrame(prediction,columns=['0'])
 df1.loc[df1['0'] == 0, 'Chances of Heart Disease'] = 'No'
 df1.loc[df1['0'] == 1, 'Chances of Heart Disease'] = 'Yes'

@@ -1,3 +1,10 @@
 streamlit
+numpy
+matplotlib
+matplotlib.pyplot
+seaborn
+scipy
 pandas
 sklearn
+warnings
+plotly.express
