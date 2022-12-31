@@ -65,6 +65,7 @@ from sklearn.preprocessing import OrdinalEncoder
 enc = OrdinalEncoder()
 enc.fit(newdf[discrete])
 newdf[discrete] = enc.transform(newdf[discrete])
+st.write(newdf)
 
 ##Chi-Square test based on the relationship of our variables
 ##This is just for us to understand our data more
@@ -97,7 +98,7 @@ f , ax = plt.subplots(figsize = (14,12))
 graph = sns.heatmap(cm,mask=mask, vmax=.8, linewidths=0.01,square=True,annot=False,cmap='rocket',
             linecolor="#F5F6F4",xticklabels = cols.values ,annot_kws = {'size':12},yticklabels = cols.values)
 
-st.write(f)
+st.pyplot(f)
 
 
 st.text(" \n")
