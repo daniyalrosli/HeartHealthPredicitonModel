@@ -7,6 +7,9 @@ from scipy import stats
 import streamlit as st
 import sklearn as sklearn
 
+sns.set(rc={'axes.facecolor':'#F5F6F4', 'figure.facecolor':'#F5F6F4'})
+
+
 st.header("Exploratory Data Analytics")
 
 st.write("On this page we will walkthrough our data analytics process as we worked towards building our model for the Asian Heart Health Model")
@@ -48,12 +51,12 @@ import warnings
 warnings.filterwarnings('ignore')
 fig,ax = plt.subplots(len(continous),2,figsize=(30,20))
 for index,i in enumerate(continous):
-    sns.distplot(newdf[i],ax=ax[index,0],color='green')
+    sns.distplot(newdf[i],ax=ax[index,0],color='#540B0E')
     stats.probplot(newdf[i],plot=ax[index,1])
     
 fig.tight_layout()
 fig.subplots_adjust(top=0.95)
-plt.suptitle("Visualizing continuous columns (train dataset)",fontsize=30)
+plt.suptitle("Visualizing continuous columns",fontsize=30)
 
 st.write(fig)
 
@@ -91,12 +94,15 @@ print(cols)
 cm = np.corrcoef(newdf[cols].values.T)
 mask = np.triu(np.ones_like(newdf.corr()))
 f , ax = plt.subplots(figsize = (14,12))
-graph = sns.heatmap(cm,mask=mask, vmax=.8, linewidths=0.01,square=True,annot=False,cmap='viridis',
-            linecolor="white",xticklabels = cols.values ,annot_kws = {'size':12},yticklabels = cols.values)
+graph = sns.heatmap(cm,mask=mask, vmax=.8, linewidths=0.01,square=True,annot=False,cmap='rocket',
+            linecolor="#F5F6F4",xticklabels = cols.values ,annot_kws = {'size':12},yticklabels = cols.values)
 
 st.write(f)
 
 
+st.text(" \n")
+st.text(" \n")
+st.text(" \n")
 
 ##Model Imports
 from sklearn.model_selection import train_test_split, KFold, GridSearchCV
