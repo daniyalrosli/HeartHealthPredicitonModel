@@ -9,7 +9,7 @@ st.markdown("- [Vegetarian Keto Dishes](https://headbangerskitchen.com/tag/veget
 st.header("Physical Activity")
 st.caption("The following links will introduce you to and help ypu learn various ways of keeping yourself fit and your body healthy")
 st.markdown("- [Fitness Advice for Older People](https://www.silversneakers.com/blog/simplest-way-stay-motivated-exercise/)")
-app2.pyst.markdown("- [Fitness Advice for Different Condition](https://www.nutrition.gov/topics/exercise-and-fitness)")
+st.markdown("- [Fitness Advice for Different Condition](https://www.nutrition.gov/topics/exercise-and-fitness)")
 st.markdown("- [Fitness Videos in Punjabi](https://www.youtube.com/channel/UCrAaXz1hMpNJ8h9Gkn9KlCg/videos)")
 st.title("Works Cited")
 st.write("- Ambrose JA, Barua RS. The pathophysiology of cigarette smoking and cardiovascular disease:an update. J Am Coll Cardiol. 2004;43(10):1731-1737.doi:10.1016/j.jacc.2003.12.047.Accessed December 30, 2022.")
