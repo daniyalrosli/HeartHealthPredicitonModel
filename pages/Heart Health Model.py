@@ -100,6 +100,9 @@ heart = pd.read_csv("HeartDisease.csv")
 param = heart.iloc[:,0:11].values
 target = heart.iloc[:,[11]].values
 
+st.write(param)
+st.write(t)
+
 model = RandomForestClassifier()
 model.fit(param, target)
 
