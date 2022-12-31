@@ -4,7 +4,11 @@ import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-st.set_page_config(layout="wide")
+st.set_page_config(
+    page_title= "Homepage",
+    layout="wide")
+
+
 sns.set(rc={'axes.facecolor':'#F5F6F4', 'figure.facecolor':'#F5F6F4'})
 
 

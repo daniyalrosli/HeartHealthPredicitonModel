@@ -2,7 +2,10 @@ import streamlit as st
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 
+
 st.title("Genric Heart Health Model")
+
+
 st.caption("This model was built using a data set that is used among medical professionals to determine the risk of heart disease in a patient. Much of the required parameters require medical equipement to determine, due to this lack of acsessibilty we sought to build a model that had input variables that are easily derived")
 
 ##User inputs for the model
@@ -100,8 +103,6 @@ heart = pd.read_csv("HeartDisease.csv")
 param = heart.iloc[:,0:11].values
 target = heart.iloc[:,[11]].values
 
-st.write(param)
-st.write(t)
 
 model = RandomForestClassifier()
 model.fit(param, target)
