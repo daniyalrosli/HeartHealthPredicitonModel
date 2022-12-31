@@ -5,5 +5,4 @@ seaborn
 scipy
 pandas
 sklearn
-warnings
 plotly.express
