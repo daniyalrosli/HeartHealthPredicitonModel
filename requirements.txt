@@ -4,5 +4,5 @@ matplotlib
 seaborn
 scipy
 pandas
-sklearn
+scikit-learn
 plotly.express
