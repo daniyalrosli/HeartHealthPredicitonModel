@@ -6,4 +6,4 @@ scipy
 pandas
 scikit-learn
 plotly.express
-imblearn.over_sampling
+imbalanced-learn
