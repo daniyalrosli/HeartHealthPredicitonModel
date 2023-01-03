@@ -97,7 +97,7 @@ def user_input_features():
   if exercise == "Yes":
     bin_exercise = 1
   st.text("\n")
-  st.write("How much do you sleep in a day (on avg):") 
+  st.write("How many hours do you sleep in a day (on avg):") 
   sleep = st.slider('', 0, 24, 12)
   st.write("You selected this option: " + str(sleep)) 
   st.text("\n")
