@@ -23,7 +23,7 @@ with col2:
     st.markdown(new_title, unsafe_allow_html=True)
 
     
-st.write("Heart disease is a leading cause of death and disability in the South Asian community. Our app aims to provide accurate and reliable information on the risk of heart disease in South Asians, empowering individuals to make informed decisions about their health and take proactive steps towards maintaining a healthy heart. By raising awareness and promoting prevention, we hope to reduce the burden of heart disease in the South Asian community and improve the overall health and well-being of our community")
+st.write("Heart disease is a leading cause of death and disability in the South Asian community. Our app aims to provide accurate and reliable information on the risk of heart disease in South Asians, empowering individuals to make informed decisions about their health and take proactive steps towards maintaining a healthy heart. By raising awareness and promoting prevention, we hope to reduce the burden of heart disease in the South Asian community and improve the overall health and well-being of our community.")
 
 st.write("The graph below illustrates the prevalence of heart disease among different racial and ethnic groups. As we can see, South Asians are disproportionately affected by heart disease, with some of the highest rates among the groups depicted. These disparities highlight the need for targeted prevention and treatment efforts within the South Asian community in order to reduce the burden of heart disease and improve overall health outcomes.")
 

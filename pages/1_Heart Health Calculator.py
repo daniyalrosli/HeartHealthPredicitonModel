@@ -23,7 +23,7 @@ def user_input_features():
   st.caption("Please fill out the questionnaire below to see if you are at risk of diabetes.")
 
   st.write("Enter BMI:") 
-  st.caption("“Body mass index (BMI) is calculated by dividing an individual's weight in kilograms by their height in meters squared. For example, if an individual weighs 70 kilograms and is 1.75 meters tall, their BMI would be calculated as follows:")
+  st.caption("Body mass index (BMI) is calculated by dividing an individual's weight in kilograms by their height in meters squared. For example, if an individual weighs 70 kilograms and is 1.75 meters tall, their BMI would be calculated as follows:")
   st.caption("BMI = 70 / (1.75 x 1.75) = 22.9")
   BMI = st.slider('', 0.0, 110.0, 55.0, key = "l")
   st.caption("You selected this option: " + str(BMI))
@@ -61,7 +61,7 @@ def user_input_features():
 
   st.text("\n")
   st.write("Are you a heavy smoker?") 
-  st.caption("A heavy smoker is someone who has smoked over 100 cigarettes in their lifetime")
+  st.caption("A heavy smoker is someone who has smoked over 100 cigarettes in their lifetime.")
   smoke = st.selectbox("Yes or No", ["No", "Yes"], key = "a")
   st.caption("You selected this option: " + str(smoke))
 
@@ -71,7 +71,7 @@ def user_input_features():
     
   st.text("\n")
   st.write("Are you a heavy drinker?")
-  st.caption("A heavy drinker is someone how drinks greater than 14 drinks per week as a man, and greater than 7 drinks per week as a women") 
+  st.caption("A heavy drinker is someone how drinks greater than 14 drinks per week as a man, and greater than 7 drinks per week as a woman.") 
   alc = st.selectbox("Yes or No", ["No", "Yes"], key = "b")
   st.caption("You selected this option: " + str(alc))
 
@@ -79,12 +79,12 @@ def user_input_features():
   if alc == "Yes":
     bin_alc = 1
   st.text("\n")
-  st.write("Of the last 30 days, how many have you experienced physical pain") 
+  st.write("Of the last 30 days, roughly how many have you experienced physical pain or illness?") 
   physical = st.slider('', 0, 30, 15, key = "1")
   st.caption("You selected this option: " + str(physical))
 
   st.text("\n")
-  st.write("Of the last 30 days, how many would you consider \'bad\' days mentally?") 
+  st.write("Of the last 30 days, roughly how many would you consider \'bad\' days mentally?") 
   mental = st.slider('', 0, 30, 15, key = "2")
   st.caption("You selected this option: " + str(mental))
 
