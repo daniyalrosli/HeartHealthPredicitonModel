@@ -83,7 +83,7 @@ with tab5:
     g.map(sns.histplot, "Smoking", stat = 'percent', color = "#C27070")
     st.pyplot(g)
    
-    st.write("We can see that in subjects with heart disease, there is a a higher percentage of smokers and vice versa...")
+    st.write("We can see that in subjects with heart disease, there is a higher percentage of smokers and vice versa.")
 
 with tab6:
     st.subheader("Drinking")
@@ -106,6 +106,7 @@ with tab7:
     g.map(sns.histplot, "HeartDisease",stat = 'percent',  multiple="dodge") 
     g.add_legend()
     st.pyplot(g)
+    st.write("As seen in the plot above, younger age categories are more prone to heart disease in men than in women as discussed above.")
     
 with tab8:    
     st.subheader("Age")
@@ -118,7 +119,7 @@ with tab8:
     g.map(sns.histplot, "HeartDisease", stat = 'percent', color = "#C27070") 
     st.pyplot(g)
     
-    st.write("As the age category increases, we can see a higher prevelance of heart disease")
+    st.write("As the age category increases, we can see a higher prevelance of heart disease.")
 
 with tab9:
     st.subheader("Diabetes")
@@ -131,7 +132,7 @@ with tab9:
     g.map(sns.histplot, "HeartDisease", stat = 'percent', color = "#C27070") 
     st.pyplot(g)
     
-    st.write("Of all the diabetic categories, we can see a higher percentage of heart disease in full diabetics")
+    st.write("Of all the diabetic categories, we can see a higher percentage of heart disease in full diabetics.")
     
 with tab10:
     st.subheader("Sleep Time")
@@ -146,7 +147,7 @@ with tab10:
     st.pyplot(g)
     
     st.write("As seen in the plot above, subjects without heart disease seem to stick close to 7 hours of sleep a night.")
-    st.write("While subjects with heart disease have a similar average, they are a lot more spread out with many subjects a lot below the average")
+    st.write("While subjects with heart disease have a similar average, they are a lot more spread out, with many subjects way below the average.")
     
 with tab11:
     st.subheader("Asthma")

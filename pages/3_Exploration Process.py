@@ -12,16 +12,16 @@ sns.set(rc={'axes.facecolor':'#F5F6F4', 'figure.facecolor':'#F5F6F4'})
 
 st.header("Exploratory Data Analytics")
 
-st.write("On this page we will walkthrough our data analytics process as we worked towards building our model for the Asian Heart Health Model")
+st.write("On this page we will walkthrough our data analytics process as we worked towards building our model for the Asian Heart Health Model.")
 
-st.write("First we understood our model in the context of all races, below is a overview of the data we used")
+st.write("First we understood our model in the context of all races; below is a overview of the data we used:")
 
 ##Loading Data
 df = pd.read_csv('data/heart_2020_cleaned.csv')
 st.write(df.sample(50))
 
 
-st.write("Next, we sorted our data into continous and discrete variables. This laid the groundwork for any future transformations we had to conduct")
+st.write("Next, we sorted our data into continuous and discrete variables. This laid the groundwork for any future transformations we had to conduct.")
 col1, col2 = st.columns(2)
 
 continous = ['BMI', 'PhysicalHealth', 'MentalHealth', 'SleepTime']
@@ -58,10 +58,10 @@ column = ['Race','BMI','Smoking','AlcoholDrinking','Stroke','PhysicalHealth','Me
 st.write("Now that we were confident in our data we started to do a biological analysis of what factors do and do not matter in order to have the most efficient and effecitive model. We determined the factors we needed were: ", column)
 
 st.header('Feature Engineering')
-st.write("In this section we will be transforming our data in order to build a model as well as analyze our variables using statistical measures")
+st.write("In this section we will be transforming our data in order to build a model as well as analyze our variables using statistical measures.")
 st.text("\n")
 st.write("First lets turn all categorical variables into booleans or numerical ranges")
-st.write("Heres an example using alcohol, below you can see we turned every input that was \"Yes\" into a 1 and every input that was a \"No\" became a 0" )
+st.write("Here's an example using alcohol, below you can see we turned every input that was \"Yes\" into a 1 and every input that was a \"No\" into a 0." )
 code = '''df.AlcoholDrinking.replace(('Yes','No'), (1,0), inplace = True)'''
 st.code(code, language = 'python')
 df.Smoking.replace(('Yes','No'), (1,0), inplace = True)
@@ -79,19 +79,19 @@ df.AgeCategory.replace(('18-24','25-29','30-34','35-39','40-44','45-49','50-54',
 df.Race.replace(('White', 'Black', 'Asian', 'American Indian/Alaskan Native', 'Other', 'Hispanic'),
                           (1,2,3,1,1,2), inplace = True)
 
-st.write('Lets look at the data now coverted into numbers and only containing the columns we need')
+st.write('Let\'s look at the data now coverted into numbers and only containing the columns we need.')
 data=df[column]
 st.write(data.sample(50))
 
-st.write('Now lets seperate the data into a train and test data set')
+st.write('Now lets seperate the data into a train and test data set.')
 X = data[column]
 st.write(X.head())
 
 Y = df.HeartDisease
 st.write('Y Value counts: ', Y.value_counts())
 
-st.write('We can see from the value counts that the data is not balanced between cases of heart disease and cases of no heart disease')
-st.write('This could cause potential errors, to avoid that we can implement SMOTE which will assist with the oversampling')
+st.write('We can see from the value counts that the data is not balanced between cases of heart disease and cases of no heart disease.')
+st.write('This could cause potential errors; to avoid that we can implement SMOTE which will assist with the oversampling.')
 from imblearn.over_sampling import SMOTE
 sm = SMOTE(random_state = 0)
 sm.fit(X,Y)
@@ -108,11 +108,11 @@ st.write('Lets see the distribution of data now:', y_resem.value_counts())
 
 st.header('Model Building')
 
-st.write('We build our model using Scikit-Learn, the model we chose to use was a DecisionTreeClassifier')
+st.write('We build our model using Scikit-Learn, the model we chose to use was a DecisionTreeClassifier.')
 from sklearn.model_selection import train_test_split
 xtrain,xtest,ytrain,ytest = train_test_split(x_resem, y_resem, test_size = 0.2, random_state = 0)
-st.write('We first split the data into xtrain, xtest, ytrain, ytest using a test size of 0.2')
-st.write('After fitting the model to our data we ran a couple tests on effectivness of the model')
+st.write('We first split the data into xtrain, xtest, ytrain, ytest using a test size of 0.2.')
+st.write('After fitting the model to our data we ran a couple tests on effectivness of the model.')
 
 from sklearn.tree import DecisionTreeClassifier
 model = DecisionTreeClassifier()
