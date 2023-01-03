@@ -108,6 +108,7 @@ model = RandomForestClassifier()
 model.fit(param, target)
 
 prediction = model.predict(user)
+
 st.subheader('Prediction :')
 df1=pd.DataFrame(prediction,columns=['0'])
 df1.loc[df1['0'] == 0, 'Chances of Heart Disease'] = 'No'
