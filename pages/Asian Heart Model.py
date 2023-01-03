@@ -1,217 +1,184 @@
-import pandas as pd
+import streamlit as st
+# For ML models
 import numpy as np
-import matplotlib as mpl
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from scipy import stats
-import streamlit as st
-import sklearn as sklearn
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.linear_model import LogisticRegression
+import warnings
+import imblearn.over_sampling
+warnings.filterwarnings('ignore')
 
 st.header("Asian Heart Disease Risk Calculator")
 
 
 ##Loading Data
 df = pd.read_csv('heart_2020_cleaned.csv')
-newdf = df
+data = df
 
-st.write("Our data is below:")
-st.write(newdf.head(20))
-#st.write("We will now filter this data to focus on South Asian subjects for our model.")
-#train = train[train["Race"] == "Asian"]
-#st.write(train)
+
+st.write("Here is a small look at the data set we used:")
+st.write(data.head(20))
+
 
 def user_input_features():
   
-  st.write("**Please fill out the questionnaire below to see if you are at risk of diabetes:**")
+  st.write("Please fill out the questionnaire below to see if you are at risk of diabetes:")
 
-  st.write("""**1. Enter BMI:**""") 
-  BMI = st.slider('', 0.0, 110.0, 55.0)
-  st.write("""**You selected this option:**""",BMI)
+  st.write("""Enter BMI:""") 
+  BMI = st.slider('', 0.0, 110.0, 55.0, key = "l")
+  st.write("""You selected this option:""",BMI)
 
-  st.write("""**2. Have you smoked over 100 cigarettes in your lifetime?**""") 
+  st.write("""Have you smoked over 100 cigarettes in your lifetime?""") 
   smoke = st.selectbox("(Yes or No", ["Yes", "No"], key = "a")
-  st.write("""**You selected this option:**""",smoke)
+  st.write("""You selected this option:""",smoke)
 
-  st.write("""**3. Are you a heavy drinker? (>14 drinks per week for men, >7 drinks per week for women)**""") 
+  bin_smoke = 0
+  if smoke == "Yes":
+    bin_smoke = 1
+    
+
+  st.write("""Are you a heavy drinker? (>14 drinks per week for men, >7 drinks per week for women)""") 
   alc = st.selectbox("(Yes or No", ["Yes", "No"], key = "b")
-  st.write("""**You selected this option:**""",alc)
+  st.write("""You selected this option:""",alc)
 
-  st.write("""**4. Have you ever had a stroke?**""") 
+  bin_alc = 0
+  if alc == "Yes":
+    bin_alc = 1
+
+  st.write("""Have you ever had a stroke?""") 
   stroke = st.selectbox("(Yes or No", ["Yes", "No"], key = "c")
-  st.write("""**You selected this option:**""", stroke)
+  st.write("""You selected this option:""", stroke)
   
-  st.write("""**5. Of the last 30 days, how many would you consider \'bad\' days physically?**""") 
+  bin_stroke = 0
+  if stroke == "Yes":
+    bin_stroke = 1
+  
+  st.write("""Of the last 30 days, how many have you expereinced physical pain""") 
   physical = st.slider('', 0, 30, 15, key = "1")
-  st.write("""**You selected this option:**""", physical)
+  st.write("""You selected this option:""", physical)
 
-  st.write("""**6. Of the last 30 days, how many would you consider \'bad\' days mentally?**""") 
+
+  st.write("""Of the last 30 days, how many would you consider \'bad\' days mentally?""") 
   mental = st.slider('', 0, 30, 15, key = "2")
-  st.write("""**You selected this option:**""", mental)
+  st.write("""You selected this option:""", mental)
 
-  st.write("""**7. Do you have difficulty climbing up stairs?**""") 
-  climb = st.selectbox("(Yes or No", ["Yes", "No"], key = "d")
-  st.write("""**You selected this option:**""", climb)
-
-  st.write("""**8. What is your sex?**""") 
+  st.write("""What is your sex?""") 
   sex = st.selectbox("(Male or Female", ["Male", "Female"], key = "e")
-  st.write("""**You selected this option:**""", sex)
+  st.write("""You selected this option:""", sex)
 
-  st.write("""**9. Enter your age:**""") 
+  bin_sex = 0
+  if sex == "Male":
+    bin_sex= 1
+
+  st.write("""9. Enter your age:""") 
   age = st.slider('', 0, 100, 50)
-  st.write("""**You selected this option:**""", age)
+  st.write("""You selected this option:""", age)
 
-  age_cat= ""
-
-  if age <= 29:
-    age_cat = "25-29"
-  elif age <= 34:
-    age_cat = "30-34"
-  elif age <= 39:
-    age_cat = "35-39"
-  elif age <= 44:
-    age_cat = "40-44"
-  elif age <= 49:
-    age_cat = "45-49"
-  elif age <= 54:
-    age_cat = "50-54" 
-  elif age <= 59:
-    age_cat = "55-59"
-  elif age <= 64:
-    age_cat = "60-64"  
-  elif age <= 69:
-    age_cat = "65-69"  
-  elif age <= 74:
-    age_cat = "70-74" 
-  elif age <= 79:
-    age_cat = "75-79"  
-  else:
-    age_cat = "older than 80"
+  factor_age = 0
+  if age in range(0, 30, 1):
+    factor_age = 0
+  elif age in range(30,45,1):
+    factor_age = 1
+  elif age in range(45, 60, 1):
+    factor_age = 2
+  elif age in range(60, 70, 1):
+    factor_age = 3
+  elif age in range(70,75,1):
+    factor_age = 4
+  elif age in range(75, 80,1):
+    factor_age = 5
+  elif age in range(80, 101, 1):
+    factor_age = 6
   
-  st.write("""**10. Have you ever been told you are diabetic?**""") 
+  st.write("""10. Have you ever been told you are diabetic?""") 
   diabetes = st.selectbox("(Yes or No)", ["Yes", "No"], key = "f")
-  st.write("""**You selected this option:**""", diabetes)  
+  st.write("""You selected this option:""", diabetes)  
   
-  st.write("""**11. Have you exercised in the past 30 days?**""") 
+  bin_diabetes = 0
+  if diabetes == "Yes":
+    bin_diabetes = 1
+
+  st.write("""Have you exercised in the past 30 days?""") 
   exercise = st.selectbox("(Yes or No)", ["Yes", "No"], key = "g")
-  st.write("""**You selected this option:**""", exercise)  
+  st.write("""You selected this option:""", exercise)  
 
-  st.write("""**12. How much do you sleep in a day (on avg):**""") 
+  bin_exercise = 0
+  if exercise == "Yes":
+    bin_exercise = 1
+
+  st.write("""How much do you sleep in a day (on avg):""") 
   sleep = st.slider('', 0, 24, 12)
-  st.write("""**You selected this option:**""", sleep) 
+  st.write("""You selected this option:""", sleep) 
   
-  st.write("""**13. How would you consider your general health?**""") 
-  gen_health = st.selectbox("(Poor, Fair, Good, Very Good, Excellent)", ["Poor", "Fair", "Good", "Very Good", "Excellent"])
-  st.write("""**You selected this option:**""", gen_health)
-
-  st.write("""**14. Have you ever been told you have asthma?**""") 
+  st.write("""Have you ever been told you have asthma?""") 
   asthma = st.selectbox("(Yes or No)", ["Yes", "No"], key = "h")
-  st.write("""**You selected this option:**""", asthma)  
+  st.write("""You selected this option:""", asthma)  
 
-  st.write("""**15. Have you ever been told you have kidney disease?**""") 
+  bin_asthma = 0
+  if asthma == "Yes":
+    bin_asthma = 1
+
+  st.write("""Have you ever been told you have kidney disease?""") 
   kidney = st.selectbox("(Yes or No)", ["Yes", "No"], key = "i")
-  st.write("""**You selected this option:**""", kidney)
-  
-  st.write("""**16. Have you ever been told you have skin cancer?**""") 
-  cancer = st.selectbox("(Yes or No)", ["Yes", "No"], key = "j")
-  st.write("""**You selected this option:**""", cancer)
+  st.write("""You selected this option:""", kidney)
 
-  data = {'BMI': BMI, 'Smoking': smoke, 'AlcoholDrinking': alc, 'Stroke': stroke, 'PhysicalHealth': physical, 'MentalHealth': mental, 'DiffWalking': climb, 'Sex': sex, 'AgeCategory': age_cat, 'Race': 'Asian', 'Diabetic': diabetes, 'PhysicalActivity': exercise, 'GenHealth': gen_health,'SleepTime': sleep, 'Asthma': asthma, 'KidneyDisease': kidney, 'SkinCancer': cancer}
-  features = pd.DataFrame(data, index=[0])
+  bin_kidney = 0
+  if kidney == "Yes":
+    bin_kidney = 1
+  
+
+  data_user = {'BMI': BMI, 'Smoking': smoke, 'Alcohol Drinking': alc, 'Stroke': stroke, 'Physical Health': physical, 'Mental Health': mental, 'Sex': sex,  'Diabetic': diabetes, 'Exercise': exercise, 'AgeCategory': age,'Sleep Time': sleep, 'Asthma': asthma, 'KidneyDisease': kidney}
+  features_str = pd.DataFrame(data_user, index=[0])
   st.subheader('Given Inputs : ')
-  st.write(features)
+  st.write(features_str)
   
-  return features
+  ##Race Factor for Asians
+  bin_race = 3
 
-user = user_input_features()
-
-##Transform data
-
-discrete = ['HeartDisease', 'Smoking', 'AlcoholDrinking', 'Stroke', 'DiffWalking', 'Sex', 'AgeCategory',
-       'Race', 'Diabetic', 'PhysicalActivity', 'GenHealth','Asthma', 'KidneyDisease', 'SkinCancer']     
-
-discrete2 = ['Smoking', 'AlcoholDrinking', 'Stroke', 'DiffWalking', 'Sex', 'AgeCategory',
-       'Race', 'Diabetic', 'PhysicalActivity', 'GenHealth','Asthma', 'KidneyDisease', 'SkinCancer']     
-
-from sklearn.preprocessing import OrdinalEncoder
-enc = OrdinalEncoder()
-enc.fit(newdf[discrete])
-newdf[discrete] = enc.transform(newdf[discrete])
-
-enc.fit(user[discrete2])
-user[discrete2] = enc.transform(user[discrete2])
-
-##Testing
-##st.write(user)
-##st.write(newdf)
+  features_user = np.array([[bin_race, BMI, bin_smoke, bin_alc, bin_stroke, physical, mental, bin_sex, bin_diabetes, bin_exercise, sleep, factor_age, bin_asthma, bin_kidney]])
+  st.write(features_user)
+  return features_user
 
 
 
-from sklearn.model_selection import train_test_split, KFold, GridSearchCV
+##Convering data to numerical inputs
+data.Smoking.replace(('Yes','No'), (1,0), inplace = True)
+data.HeartDisease.replace(('Yes','No'), (1,0), inplace = True)
+data.AlcoholDrinking.replace(('Yes','No'), (1,0), inplace = True)
+data.Stroke.replace(('Yes', "No"), (1,0), inplace = True)
+data.Sex.replace(('Male','Female'), (1,0), inplace = True)
+data.Asthma.replace(('Yes','No'), (1,0), inplace = True)
+data.Diabetic.replace(('Yes','No','No, borderline diabetes','Yes (during pregnancy)'), (1,0,0,0), inplace = True)
+data.PhysicalActivity.replace(('Yes','No'), (1,0), inplace = True)
+data.KidneyDisease.replace(('Yes','No'), (1,0), inplace = True)
+data.AgeCategory.replace(('18-24','25-29','30-34','35-39','40-44','45-49','50-54',
+                          '55-59','60-64','65-69','70-74','75-79','80 or older'),
+                         (0,0,1,1,1,2,2,2,3,3,4,5,6), inplace = True)
+data.Race.replace(('White', 'Black', 'Asian', 'American Indian/Alaskan Native', 'Other', 'Hispanic'),
+                          (1,2,3,1,1,2), inplace = True)
 
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
+column = ['Race','BMI','Smoking','AlcoholDrinking','Stroke','PhysicalHealth','MentalHealth','Sex','Diabetic','PhysicalActivity','SleepTime','AgeCategory','Asthma','KidneyDisease']
 
-from sklearn.metrics import precision_score,recall_score
-from sklearn.metrics import f1_score
+X = data[column]
+Y = data.HeartDisease
 
+from imblearn.over_sampling import SMOTE
+sm = SMOTE(random_state = 0)
+sm.fit(X,Y)
+x_resem, y_resem = sm.fit_resample(X, Y)
+st.header('Model')
 
-##X_train, X_test, y_train, y_test=train_test_split(newdf,y,test_size=0.1,random_state=12)
-param = newdf.iloc[:,0:17].values
-target = newdf.iloc[:,[0]].values
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest = train_test_split(x_resem, y_resem, test_size = 0.2, random_state = 0)
 
-#Testing
-##st.write(param)
-##st.write(target)
+from sklearn.tree import DecisionTreeClassifier
+model = DecisionTreeClassifier()
+model.fit(xtrain, ytrain)
 
-
-model = ExtraTreesClassifier()
-model.fit(param, target)
-
-prediction = model.predict(user)
-st.subheader('Prediction using ExtraTreesClassifier:')
+features_users = user_input_features()
+prediction = model.predict(features_users)
+st.subheader('Prediction :')
 df1=pd.DataFrame(prediction,columns=['0'])
 df1.loc[df1['0'] == 0, 'Chances of Heart Disease'] = 'No'
 df1.loc[df1['0'] == 1, 'Chances of Heart Disease'] = 'Yes'
 st.write(df1)
-
-prediction_proba = model.predict_proba(user)
-st.subheader('Prediction Probability in % :')
-st.write(prediction_proba * 100)
-
-model = RandomForestClassifier()
-model.fit(param, target)
-
-prediction = model.predict(user)
-st.subheader('Prediction using RandomForestClassifer:')
-df1=pd.DataFrame(prediction,columns=['0'])
-df1.loc[df1['0'] == 0, 'Chances of Heart Disease'] = 'No'
-df1.loc[df1['0'] == 1, 'Chances of Heart Disease'] = 'Yes'
-st.write(df1)
-
-prediction_proba = model.predict_proba(user)
-st.subheader('Prediction Probability in % :')
-st.write(prediction_proba * 100)
-
-
-
-
-
-
-  
-  
-  
-
-
-
-
-
-

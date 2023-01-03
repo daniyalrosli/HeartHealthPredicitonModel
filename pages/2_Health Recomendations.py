@@ -1,7 +1,16 @@
 import streamlit as st
-st.title("Health Tips")
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs(["Nutrition and Diet Tips", "Excersise Tips", "BMI Explanation", "Genetic Explanation", "Smoking", "Drinking", "Gender", "Age", "Diabetes", "Sleep Time", "Asthma", "Kidney Disease"])
+df = pd.read_csv('heart_2020_cleaned.csv')
+df_yes = df[df["HeartDisease"] == "Yes"]
+df_no = df[df["HeartDisease"] == "No"]
+
+st.title("Health Tips and Variable Explanations")
+
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs(["Nutrition and Diet Tips", "Excersise Tips", "BMI Explanation", "Genetic Explanation", "Smoking Explanation", "Drinking Explanation", "Sex Explanation", "Age Explanation", "Diabetes Explanation", "Sleep Time Explanation", "Asthma Explanation", "Kidney Disease Explanation"])
 
 
 with tab1:
@@ -32,7 +41,6 @@ with tab2:
     st. write("3. Vary your workouts: To keep your workouts interesting and prevent boredom, try to vary your routine. This could mean trying different types of cardio, such as running or cycling, or mixing up your strength training exercises. You could also try different workout formats, such as group fitness classes or online workouts.")
     st. write("4. Listen to your body: It’s important to listen to your body and not push yourself too hard, especially if you’re new to exercise. If you feel tired or experience any discomfort, take a break and rest. Gradually increase the intensity and duration of your workouts as you become more comfortable and fit.")
     st. write("By following this healthy workout routine, you can improve your overall health and reduce your risk of type 2 diabetes and heart disease. Remember to also focus on eating a healthy diet, getting enough sleep, and managing stress to further support your health. Consult with a healthcare professional before starting any new fitness routine, especially if you have any health conditions.")
-    st.title("Additional Explanations of Variables")
 
 with tab3:
     st.subheader("BMI Explanation")
@@ -43,6 +51,12 @@ with tab3:
     st. write("It is important to note that BMI is not a perfect measure of body fat, as it does not take into account differences in muscle mass, bone density, and distribution of fat. Additionally, it may not be accurate for individuals who are very athletic or have a lot of muscle mass, as it does not distinguish between fat and muscle. However, it can be a useful tool for assessing an individual's risk of developing health issues related to excess body fat.")
     st. write("It is recommended that individuals aim to maintain a BMI within the normal weight range, as this is associated with a lower risk of developing health problems. However, it is also important to consider other factors, such as waist circumference and overall body composition, when determining an individual's overall health status. A healthcare professional can help to determine the most appropriate weight range for an individual based on their specific circumstances.")
     st. write("In conclusion, BMI is a simple tool used to assess body fat based on height and weight. It is important to maintain a BMI within the normal range in order to reduce the risk of developing health problems, but it is also important to consider other factors when assessing overall health status. By understanding the potential risks associated with different BMI ranges, individuals can take steps to maintain a healthy weight and improve their overall well-being.")
+    
+    g = sns.FacetGrid(df, col = "HeartDisease")
+    g.map(sns.histplot, "BMI", stat = 'percent', color = "#C27070")
+    st.pyplot(g)
+    
+    st.write("As shown in the graphs above, there is a lower average BMI for those without heart disease.")
 
 with tab4: 
     st.subheader("Genetic Explanation")
@@ -61,6 +75,13 @@ with tab5:
     st. write("In addition to damaging the arteries, smoking also increases blood pressure and heart rate. The chemicals in cigarette smoke stimulate the production of adrenaline, a hormone that can cause the heart to beat faster and harder. This can put extra strain on the heart, making it more likely to develop problems over time. High blood pressure is a known risk factor for heart disease, and smoking can contribute to the development of high blood pressure. In fact, smokers are twice as likely to develop high blood pressure compared to non-smokers.")
     st. write("Finally, smoking can also increase the risk of blood clots, which can block the flow of blood to the heart and cause a heart attack. The chemicals in cigarette smoke can cause the blood to become thicker and stickier, making it more likely to form clots. Blood clots can also form in the arteries of the heart, leading to a condition called coronary artery disease, which can cause a heart attack. Smokers are twice as likely to develop blood clots compared to non-smokers.")
     st. write("In conclusion, the evidence is clear that smoking is a major risk factor for heart disease. Quitting smoking can significantly reduce the risk of developing this condition, and is one of the best things that a person can do for their heart health. If you are a smoker, it is never too late to quit and improve your heart health. The benefits of quitting smoking start almost immediately and increase over time, so don't wait to take this important step for your health.")
+    
+    sns.set(style = "darkgrid")
+    g = sns.FacetGrid(df, col = "HeartDisease", col_wrap = 2)
+    g.map(sns.histplot, "Smoking", stat = 'percent', color = "#C27070")
+    st.pyplot(g)
+   
+    st.write("We can see that in subjects with heart disease, there is a a higher percentage of smokers and vice versa...")
 
 with tab6:
     st.subheader("Drinking")
@@ -69,15 +90,21 @@ with tab6:
     st. write("In addition to increasing blood pressure, alcohol can also damage the heart muscle. The chemicals in alcohol can cause the heart muscle to become inflamed and scarred, a process known as alcoholic cardiomyopathy. This can lead to a weaken and enlarged heart, which is less able to pump blood effectively. Alcoholic cardiomyopathy is a major cause of heart failure, and can be prevented by reducing alcohol consumption. The American Heart Association recommends that men have no more than two drinks per day and women have no more than one drink per day to reduce the risk of alcoholic cardiomyopathy and other alcohol-related health problems.")
     st. write("Finally, alcohol can also increase the risk of arrhythmias, which are abnormal heart rhythms that can lead to heart failure. Alcohol can interfere with the electrical signals that control the heart's rhythm, leading to arrhythmias. In addition, alcohol can increase the risk of blood clots, which can block the flow of blood to the heart and cause a heart attack.")
     st. write("In conclusion, alcohol consumption can have a significant effect on heart failure. Reducing alcohol consumption can help to reduce the risk of developing this condition, and is an important step in maintaining heart health. If you are concerned about your alcohol consumption and its effect on your heart health, it is important to speak with a healthcare provider for guidance. They can help you to understand the risks and benefits of alcohol consumption and provide you with advice on how to reduce your risk of heart failure and other alcohol-related health problems.")
+    
 
 with tab7: 
-    st.subheader("Gender")
+    st.subheader("Sex")
     st. write("Heart disease is a leading cause of death and disability worldwide, and it affects both men and women. However, there are some differences in the way that heart disease presents and progresses in men and women, and these differences can have significant impacts on the diagnosis, treatment, and outcomes of heart disease.")
     st. write("One of the main differences between men and women with heart disease is the age at which they are most likely to develop the condition. Men are more likely to develop heart disease at an earlier age than women, with the risk increasing after the age of 45. In contrast, women are more likely to develop heart disease after the age of 55. This difference in age of onset may be due to the protective effect of estrogen, a hormone that is present in higher levels in women before menopause.")
     st. write("Another difference between men and women with heart disease is the symptoms they experience. Men are more likely to experience chest pain as a symptom of heart disease, while women are more likely to experience other symptoms such as shortness of breath, nausea, and fatigue. This difference in symptoms can lead to delays in diagnosis and treatment for women, as they may not seek medical attention as quickly as men.")
     st. write("In addition to these differences, there are also some unique risk factors for heart disease in women. Pregnancy complications, such as pre-eclampsia and gestational diabetes, can increase the risk of heart disease in women. Women who have undergone menopause are also at increased risk for heart disease, as the loss of estrogen can lead to changes in the blood vessels and an increased risk of heart attack.")
     st. write("In conclusion, gender can have a significant effect on heart disease. It is important for both men and women to be aware of their risk factors and to take steps to reduce their risk, such as maintaining a healthy diet and lifestyle, quitting smoking, and getting regular medical check-ups. It is also important for healthcare providers to be aware of the unique risk factors and symptoms of heart disease in women and to provide appropriate care and treatment.")
 
+    g = sns.FacetGrid(df, col = "Sex", hue = "AgeCategory")
+    g.map(sns.histplot, "HeartDisease", stat = 'percent', color = ["#C27070"], multiple="dodge")#, "#3d8f8f"]) 
+    g.add_legend()
+    st.pyplot(g)
+    
 with tab8:    
     st.subheader("Age")
     st. write("Heart disease is a leading cause of death and disability worldwide, and it can affect people of all ages. However, age is a major risk factor for the development of heart disease, and the risk of heart disease increases with age. This is due in part to the natural changes that occur in the body as we age, as well as the accumulation of risk factors over time")
@@ -85,13 +112,25 @@ with tab8:
     st. write("Another way in which age can increase the risk of heart disease is by increasing the risk of certain conditions and diseases that are associated with heart disease. For example, the risk of high blood pressure, diabetes, and high cholesterol increases with age, and all of these conditions are known risk factors for heart disease. In addition, the risk of heart failure, a condition in which the heart is unable to pump enough blood to meet the body's needs, also increases with age.")
     st. write("In conclusion, age is a major risk factor for heart disease, and the risk of heart disease increases with age. However, there are steps that can be taken to reduce the risk of heart disease at any age, such as maintaining a healthy diet and lifestyle, quitting smoking, and getting regular medical check-ups. It is important for people of all ages to be aware of their risk factors and to take steps to reduce their risk of heart disease.")
 
+    g = sns.FacetGrid(df.sort_values('AgeCategory', ascending=False), col = "AgeCategory", col_wrap = 4)
+    g.map(sns.histplot, "HeartDisease", stat = 'percent', color = "#C27070") 
+    st.pyplot(g)
+    
+    st.write("As the age category increases, we can see a higher prevelance of heart disease")
+
 with tab9:
     st.subheader("Diabetes")
     st. write("People with diabetes have an increased risk of heart failure for several reasons. First, diabetes can cause changes in the arteries that increase the risk of heart disease. The high levels of sugar in the blood associated with diabetes can damage the walls of the arteries, leading to a condition called arteriosclerosis. This can make the arteries stiff and narrow, reducing blood flow to the heart and increasing the risk of heart attack and stroke.")
     st. write("In addition, diabetes is often accompanied by other risk factors for heart disease, such as high blood pressure and high cholesterol. These conditions can further increase the risk of heart disease in people with diabetes.")
     st. write("Finally, diabetes can also damage the heart muscle, leading to a condition called diabetic cardiomyopathy. This can weaken the heart and make it less able to pump blood effectively, increasing the risk of heart failure.")
     st. write("In conclusion, people with diabetes have an increased risk of heart failure due to the damage that diabetes can cause to the arteries and heart muscle, as well as the presence of other risk factors for heart disease. It is important for people with diabetes to manage their blood sugar levels and control other risk factors, such as high blood pressure and high cholesterol, to reduce the risk of heart failure and other complications.")
-
+  
+    g = sns.FacetGrid(df, col = "Diabetic", col_wrap = 4)
+    g.map(sns.histplot, "HeartDisease", stat = 'percent', color = "#C27070") 
+    st.pyplot(g)
+    
+    st.write("Of all the diabetic categories, we can see a higher percentage of heart disease in full diabetics")
+    
 with tab10:
     st.subheader("Sleep Time")
     st. write("There is a significant relationship between sleep time and heart disease. Studies have shown that people who get too little or too much sleep are at increased risk of developing heart disease.")
@@ -100,12 +139,25 @@ with tab10:
     st. write("On the other hand, too much sleep can also increase the risk of heart disease. Studies have shown that people who get more than 9 hours of sleep per night are at increased risk of heart disease. It is not clear exactly why this is the case, but it may be due to underlying health conditions that can both cause excessive sleep and increase the risk of heart disease.")
     st. write("In conclusion, there is a significant relationship between sleep time and heart disease. Getting the right amount of sleep, typically 7-9 hours per night for adults, is important for maintaining heart health. If you are concerned about your sleep time and its effect on your heart health, it is important to speak with a healthcare provider for guidance.")
 
+    g = sns.FacetGrid(df, col = "HeartDisease")
+    g.map(sns.boxenplot, "SleepTime", color = "#C27070") 
+    st.pyplot(g)
+    
+    st.write("As seen in the plot above, subjects without heart disease seem to stick close to 7 hours of sleep a night.")
+    st.write("While subjects with heart disease have a similar average, they are a lot more spread out with many subjects a lot below the average")
+    
 with tab11:
     st.subheader("Asthma")
     st. write("Asthma and heart disease are two separate conditions, but they can be interconnected in several ways. People with asthma are at increased risk of developing heart disease, and people with heart disease are also at increased risk of developing asthma.")
     st. write("One of the main ways in which asthma can increase the risk of heart disease is through its effect on blood pressure. Asthma can cause the blood vessels to constrict, which can lead to an increase in blood pressure. High blood pressure is a major risk factor for heart disease, and the risk of heart disease increases as blood pressure increases. In addition, asthma can also cause an increase in heart rate, which can put extra strain on the heart and increase the risk of heart disease.")
     st. write("People with heart disease are also at increased risk of developing asthma. This is because the same factors that increase the risk of heart disease, such as high blood pressure and high cholesterol, can also increase the risk of asthma. In addition, heart disease can cause changes in the blood vessels that can increase the risk of asthma. For example, heart failure, a condition in which the heart is unable to pump enough blood to meet the body's needs, can cause fluid to build up in the lungs, increasing the risk of asthma.")
     st. write("In conclusion, there is a relationship between asthma and heart disease, with people with asthma at increased risk of developing heart disease, and people with heart disease at increased risk of developing asthma. It is important for people with asthma or heart disease to be aware of their risk of developing the other condition and to take steps to manage their health, such as following their treatment plan and adopting a healthy lifestyle.")
+
+    g = sns.FacetGrid(df, col = "HeartDisease")
+    g.map(sns.histplot, "Asthma", stat = 'percent', color = "#C27070") 
+    st.pyplot(g)
+    
+    st.write("We can see a higher percentage of asthma patients in those with heart disease.")
 
 with tab12:
     st.subheader("Kidney Disease")
@@ -114,3 +166,9 @@ with tab12:
     st. write("In addition to its effect on blood pressure, kidney disease can also increase the risk of heart disease through its effect on the levels of certain substances in the blood. For example, kidney disease can lead to an accumulation of waste products in the blood, such as urea and creatinine, which can increase the risk of heart disease. These waste products can build up in the blood when the kidneys are not functioning properly, and they can cause inflammation and damage to the blood vessels, increasing the risk of heart disease. Kidney disease can also cause an imbalance in the levels of electrolytes in the blood, such as potassium and sodium, which can also increase the risk of heart disease.")
     st. write("Finally, kidney disease can also increase the risk of heart disease by increasing the risk of other conditions that are associated with heart disease, such as diabetes and high cholesterol. These conditions can further increase the risk of heart disease in people with kidney disease. In addition, people with heart disease are also at increased risk of developing kidney disease. This is because the same factors that increase the risk of heart disease, such as high blood pressure and high cholesterol, can also increase the risk of kidney disease. In addition, heart disease can cause changes in the blood vessels that can increase the risk of kidney disease. For example, heart failure, a condition in which the heart is unable to pump enough blood to meet the body's needs, can cause fluid to build up in the lungs, increasing the risk of kidney disease.")
     st. write("In conclusion, there is a strong and complex relationship between kidney disease and heart disease. People with kidney disease are at increased risk of developing heart disease, and people with heart disease are also at increased risk of developing kidney disease. It is important for people with kidney disease or heart disease to be aware of their risk of developing the other condition and to take steps to manage their health, such as following their treatment plan and adopting a healthy lifestyle. This can help to reduce the risk of developing these conditions and to improve overall health and well-being.")
+    
+    g = sns.FacetGrid(df, col = "HeartDisease")
+    g.map(sns.histplot, "KidneyDisease", stat = 'percent', color = "#C27070") 
+    st.pyplot(g)
+    
+    st.write("We can see a higher percentage of kidney disease patients in those with heart disease.")

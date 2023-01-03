@@ -19,7 +19,7 @@ st.write("First lets load in our data set and filter by race = 'Asian'")
 df = pd.read_csv('heart_2020_cleaned.csv')
 
 newdf = df[(df.Race == "Asian")]
-st.write(newdf.head(20))
+st.write(newdf)
 
 
 
