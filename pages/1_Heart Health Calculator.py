@@ -27,7 +27,7 @@ def user_input_features():
   st.write("You selected this option:",BMI)
 
   st.write("Have you smoked over 100 cigarettes in your lifetime?") 
-  smoke = st.selectbox("(Yes or No", ["Yes", "No"], key = "a")
+  smoke = st.selectbox("Yes or No", ["Yes", "No"], key = "a")
   st.write("You selected this option:",smoke)
 
   bin_smoke = 0
@@ -125,7 +125,7 @@ def user_input_features():
     bin_kidney = 1
   
 
-  data_user = {'BMI': BMI, 'Smoking': smoke, 'Alcohol Drinking': alc, 'Stroke': stroke, 'Physical Health': physical, 'Mental Health': mental, 'Sex': sex,  'Diabetic': diabetes, 'Exercise': exercise, 'AgeCategory': age,'Sleep Time': sleep, 'Asthma': asthma, 'KidneyDisease': kidney}
+  data_user = {'BMI': BMI, 'Smoking': smoke, 'AlcoholDrinking	': alc, 'Stroke': stroke, 'PhysicalHealth': physical, 'MentalHealth': mental, 'Sex': sex,  'Diabetic': diabetes, 'PhysicalActivity	': exercise, 'SleepTime': sleep,'AgeCategory': age, 'Asthma': asthma, 'KidneyDisease': kidney}
   features_str = pd.DataFrame(data_user, index=[0])
   st.subheader('Given Inputs : ')
   st.write(features_str)
@@ -134,8 +134,9 @@ def user_input_features():
   bin_race = 3
 
   features_user = np.array([[bin_race, BMI, bin_smoke, bin_alc, bin_stroke, physical, mental, bin_sex, bin_diabetes, bin_exercise, sleep, factor_age, bin_asthma, bin_kidney]])
+  features_user_2 = np.array([[BMI, bin_smoke, bin_alc, bin_stroke, physical, mental, bin_sex, bin_diabetes, bin_exercise, sleep, factor_age, bin_asthma, bin_kidney]])
   st.write(features_user)
-  return features_user
+  return features_user, features_user_2
 
 
 # Replace categorical variables with numerical values
@@ -175,14 +176,45 @@ model = DecisionTreeClassifier()
 model.fit(X_train, Y_train)
 
 # Use the model to make predictions on the user's input
-features_users = user_input_features()
+result = user_input_features()
+features_users = result[0]
 prediction = model.predict(features_users)
 prediction_proba = model.predict_proba(features_users)
 
 # Display the prediction and probability to the user
-st.subheader('Prediction :')
-df1=pd.DataFrame(prediction,columns=['0'])
-df1.loc[df1['0'] == 0, 'Chances of Heart Disease'] = 'No'
-df1.loc[df1['0'] == 1, 'Chances of Heart Disease'] = 'Yes'
-st.write(df1)
+st.subheader("Prediction:")
 
+# Create a dataframe with the prediction
+prediction_df = pd.DataFrame(prediction, columns=["Prediction"])
+
+# Add a column with the chances of heart disease
+prediction_df["Result"] = prediction_df["Prediction"].map({0: "You are not likely to have heart disease", 1: "You might be at risk for heart disease, further steps are listed below:"})
+
+# Drop the original prediction column
+prediction_df = prediction_df.drop("Prediction", axis=1)
+st.dataframe(prediction_df)
+
+column2 = ['BMI','Smoking','AlcoholDrinking','Stroke','PhysicalHealth','MentalHealth','Sex','Diabetic','PhysicalActivity','SleepTime','AgeCategory','Asthma','KidneyDisease']
+
+# Select the subset of columns
+subset = df[column2]
+
+# Calculate the means and standard deviations of the subset of columns
+means = subset.mean()
+stds = subset.std()
+
+# Create a dataframe with the means and standard deviations
+stats_df = pd.concat([means, stds], axis=1)
+stats_df.columns = ['Mean', 'Standard Deviation']
+
+# Display the means and standard deviations
+st.header("Further Steps")
+st.write("Although our model does not produce answers at 100\% accuracy, we do suggest reaching out to medical professionals if at risk for heart disease.")
+st.write("Here is a list of resources to learn more about heart disease. The first link provided offers instructions in multiple languages. Further information is provided on the Health Recommendation Pages")
+st.markdown("[National Heart, Lung, and Blood Institute (NHLBI): Heart Disease](https://www.nhlbi.nih.gov/health-topics/heart-disease)")
+st.markdown("[Health Resources and Services Administration (HRSA): Heart Disease](https://www.hrsa.gov/health-topics/heart-disease)")
+st.markdown("[Centers for Disease Control and Prevention (CDC): Heart Disease Prevention](https://www.cdc.gov/heartdisease/prevention.htm)")
+st.text("\n")
+
+st.write("We have provided the means for each category below, we recommend you compare scores to learn which areas you can improve on. More information is provided on the Health Recommendation Page")
+st.dataframe(stats_df)
