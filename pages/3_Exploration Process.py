@@ -131,10 +131,7 @@ matrix_df = pd.DataFrame(matrix, index=['True Neg','True Pos'], columns=['Pred N
 # Use the seaborn heatmap function to plot the confusion matrix
 plot = sns.heatmap(matrix_df, annot=True, fmt='d', cmap='Reds')
 
-
-plot.figure.savefig('plot.png')
-
-
+# plot is being inconsistent so I uploaded an image of the plot
 st.image('images/plot.png')
 
 st.write('Accuracy Scores')
