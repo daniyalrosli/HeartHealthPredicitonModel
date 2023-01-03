@@ -19,56 +19,17 @@ data = df
 
 # Define a function to get user input
 def user_input_features():
-  
-  st.write("Please fill out the questionnaire below to see if you are at risk of diabetes:")
+
+  st.caption("Please fill out the questionnaire below to see if you are at risk of diabetes.")
 
   st.write("Enter BMI:") 
+  st.caption("“Body mass index (BMI) is calculated by dividing an individual's weight in kilograms by their height in meters squared. For example, if an individual weighs 70 kilograms and is 1.75 meters tall, their BMI would be calculated as follows:")
+  st.caption("BMI = 70 / (1.75 x 1.75) = 22.9")
   BMI = st.slider('', 0.0, 110.0, 55.0, key = "l")
   st.write("You selected this option:",BMI)
 
-  st.write("Have you smoked over 100 cigarettes in your lifetime?") 
-  smoke = st.selectbox("Yes or No", ["Yes", "No"], key = "a")
-  st.write("You selected this option:",smoke)
-
-  bin_smoke = 0
-  if smoke == "Yes":
-    bin_smoke = 1
-    
-
-  st.write("Are you a heavy drinker? (>14 drinks per week for men, >7 drinks per week for women)") 
-  alc = st.selectbox("Yes or No", ["Yes", "No"], key = "b")
-  st.write("You selected this option:",alc)
-
-  bin_alc = 0
-  if alc == "Yes":
-    bin_alc = 1
-
-  st.write("Have you ever had a stroke?") 
-  stroke = st.selectbox("(Yes or No", ["Yes", "No"], key = "c")
-  st.write("You selected this option:", stroke)
-  
-  bin_stroke = 0
-  if stroke == "Yes":
-    bin_stroke = 1
-  
-  st.write("Of the last 30 days, how many have you expereinced physical pain") 
-  physical = st.slider('', 0, 30, 15, key = "1")
-  st.write("You selected this option:", physical)
-
-
-  st.write("Of the last 30 days, how many would you consider \'bad\' days mentally?") 
-  mental = st.slider('', 0, 30, 15, key = "2")
-  st.write("You selected this option:", mental)
-
-  st.write("What is your sex?") 
-  sex = st.selectbox("(Male or Female", ["Male", "Female"], key = "e")
-  st.write("You selected this option:", sex)
-
-  bin_sex = 0
-  if sex == "Male":
-    bin_sex= 1
-
-  st.write("9. Enter your age:") 
+  st.text("\n")
+  st.write("Enter your age:") 
   age = st.slider('', 0, 100, 50)
   st.write("You selected this option:", age)
 
@@ -87,15 +48,42 @@ def user_input_features():
     factor_age = 5
   elif age in range(80, 101, 1):
     factor_age = 6
-  
-  st.write("10. Have you ever been told you are diabetic?") 
-  diabetes = st.selectbox("(Yes or No)", ["Yes", "No"], key = "f")
-  st.write("You selected this option:", diabetes)  
-  
-  bin_diabetes = 0
-  if diabetes == "Yes":
-    bin_diabetes = 1
+  st.text("\n")
+  st.write("What is your sex?") 
+  sex = st.selectbox("(Male or Female", ["Male", "Female"], key = "e")
+  st.write("You selected this option:", sex)
 
+  bin_sex = 0
+  if sex == "Male":
+    bin_sex= 1
+  st.text("\n")
+  st.write("Are you a heavy smoker?") 
+  st.caption("A heavy smoker is someone who has smoked over 100 cigarettes in their lifetime")
+  smoke = st.selectbox("Yes or No", ["Yes", "No"], key = "a")
+  st.write("You selected this option:",smoke)
+
+  bin_smoke = 0
+  if smoke == "Yes":
+    bin_smoke = 1
+    
+  st.text("\n")
+  st.write("Are you a heavy drinker?")
+  st.caption("A heavy drinker is someone how drinks greater than 14 drinks per week as a man, and greater than 7 drinks per week as a women") 
+  alc = st.selectbox("Yes or No", ["Yes", "No"], key = "b")
+  st.write("You selected this option:",alc)
+
+  bin_alc = 0
+  if alc == "Yes":
+    bin_alc = 1
+  st.text("\n")
+  st.write("Of the last 30 days, how many have you experienced physical pain") 
+  physical = st.slider('', 0, 30, 15, key = "1")
+  st.write("You selected this option:", physical)
+  st.text("\n")
+  st.write("Of the last 30 days, how many would you consider \'bad\' days mentally?") 
+  mental = st.slider('', 0, 30, 15, key = "2")
+  st.write("You selected this option:", mental)
+  st.text("\n")
   st.write("Have you exercised in the past 30 days?") 
   exercise = st.selectbox("(Yes or No)", ["Yes", "No"], key = "g")
   st.write("You selected this option:", exercise)  
@@ -103,11 +91,32 @@ def user_input_features():
   bin_exercise = 0
   if exercise == "Yes":
     bin_exercise = 1
-
+  st.text("\n")
   st.write("How much do you sleep in a day (on avg):") 
   sleep = st.slider('', 0, 24, 12)
   st.write("You selected this option:", sleep) 
+  st.text("\n")
+  st.write("Have you ever had a stroke?") 
+  stroke = st.selectbox("(Yes or No", ["Yes", "No"], key = "c")
+  st.write("You selected this option:", stroke)
   
+  bin_stroke = 0
+  if stroke == "Yes":
+    bin_stroke = 1
+  
+
+  st.text("\n")
+  st.write("Have you ever been told you are diabetic?") 
+  diabetes = st.selectbox("(Yes or No)", ["Yes", "No"], key = "f")
+  st.write("You selected this option:", diabetes)  
+  
+  bin_diabetes = 0
+  if diabetes == "Yes":
+    bin_diabetes = 1
+
+
+
+  st.text("\n")
   st.write("Have you ever been told you have asthma?") 
   asthma = st.selectbox("(Yes or No)", ["Yes", "No"], key = "h")
   st.write("You selected this option:", asthma)  
@@ -115,7 +124,7 @@ def user_input_features():
   bin_asthma = 0
   if asthma == "Yes":
     bin_asthma = 1
-
+  st.text("\n")
   st.write("Have you ever been told you have kidney disease?") 
   kidney = st.selectbox("(Yes or No)", ["Yes", "No"], key = "i")
   st.write("You selected this option:", kidney)
@@ -124,8 +133,8 @@ def user_input_features():
   if kidney == "Yes":
     bin_kidney = 1
   
-
-  data_user = {'BMI': BMI, 'Smoking': smoke, 'AlcoholDrinking	': alc, 'Stroke': stroke, 'PhysicalHealth': physical, 'MentalHealth': mental, 'Sex': sex,  'Diabetic': diabetes, 'PhysicalActivity	': exercise, 'SleepTime': sleep,'AgeCategory': age, 'Asthma': asthma, 'KidneyDisease': kidney}
+  st.text("\n")
+  data_user = {'BMI': BMI, 'Smoking': smoke, 'AlcoholDrinking    ': alc, 'Stroke': stroke, 'PhysicalHealth': physical, 'MentalHealth': mental, 'Sex': sex,  'Diabetic': diabetes, 'PhysicalActivity    ': exercise, 'SleepTime': sleep,'AgeCategory': age, 'Asthma': asthma, 'KidneyDisease': kidney}
   features_str = pd.DataFrame(data_user, index=[0])
   st.subheader('Given Inputs : ')
   st.write(features_str)
@@ -139,7 +148,8 @@ def user_input_features():
   return features_user, features_user_2
 
 
-# Replace categorical variables with numerical values
+
+
 data.Smoking.replace(('Yes','No'), (1,0), inplace = True)
 data.HeartDisease.replace(('Yes','No'), (1,0), inplace = True)
 data.AlcoholDrinking.replace(('Yes','No'), (1,0), inplace = True)

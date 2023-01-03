@@ -13,7 +13,7 @@ df_no = df[df["HeartDisease"] == "No"]
 
 st.title("Health Tips and Variable Explanations")
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs(["Nutrition and Diet Tips", "Excersise Tips", "BMI Explanation", "Genetic Explanation", "Smoking Explanation", "Drinking Explanation", "Sex Explanation", "Age Explanation", "Diabetes Explanation", "Sleep Time Explanation", "Asthma Explanation", "Kidney Disease Explanation"])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs(["Nutrition and Diet Tips", "Exercise Tips", "BMI Explanation", "Genetic Explanation", "Smoking Explanation", "Drinking Explanation", "Sex Explanation", "Age Explanation", "Diabetes Explanation", "Sleep Time Explanation", "Asthma Explanation", "Kidney Disease Explanation"])
 
 
 with tab1:
