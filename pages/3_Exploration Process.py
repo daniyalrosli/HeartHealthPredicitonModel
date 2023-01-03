@@ -17,7 +17,7 @@ st.write("On this page we will walkthrough our data analytics process as we work
 st.write("First we understood our model in the context of all races, below is a overview of the data we used")
 
 ##Loading Data
-df = pd.read_csv('heart_2020_cleaned.csv')
+df = pd.read_csv('data/heart_2020_cleaned.csv')
 st.write(df.sample(50))
 
 
@@ -135,7 +135,7 @@ plot = sns.heatmap(matrix_df, annot=True, fmt='d', cmap='Reds')
 plot.figure.savefig('plot.png')
 
 
-st.image('plot.png')
+st.image('images/plot.png')
 
 st.write('Accuracy Scores')
 # Calculate the evaluation scores

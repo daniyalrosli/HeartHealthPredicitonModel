@@ -7,7 +7,7 @@ import matplotlib.ticker as mtick
 
 sns.set(rc={'axes.facecolor':'#F5F6F4', 'figure.facecolor':'#F5F6F4'})
 
-df = pd.read_csv('heart_2020_cleaned.csv')
+df = pd.read_csv('data/heart_2020_cleaned.csv')
 df_yes = df[df["HeartDisease"] == "Yes"]
 df_no = df[df["HeartDisease"] == "No"]
 

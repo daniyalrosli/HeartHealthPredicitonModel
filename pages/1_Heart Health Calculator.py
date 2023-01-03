@@ -14,7 +14,7 @@ warnings.filterwarnings('ignore')
 st.header("Asian Heart Disease Risk Calculator")
 
 # Load the data
-df = pd.read_csv('heart_2020_cleaned.csv')
+df = pd.read_csv('data/heart_2020_cleaned.csv')
 data = df
 
 # Define a function to get user input
@@ -26,12 +26,12 @@ def user_input_features():
   st.caption("“Body mass index (BMI) is calculated by dividing an individual's weight in kilograms by their height in meters squared. For example, if an individual weighs 70 kilograms and is 1.75 meters tall, their BMI would be calculated as follows:")
   st.caption("BMI = 70 / (1.75 x 1.75) = 22.9")
   BMI = st.slider('', 0.0, 110.0, 55.0, key = "l")
-  st.write("You selected this option:",BMI)
+  st.caption("You selected this option: " + str(BMI))
 
   st.text("\n")
   st.write("Enter your age:") 
   age = st.slider('', 0, 100, 50)
-  st.write("You selected this option:", age)
+  st.caption("You selected this option: " + str(age))
 
   factor_age = 0
   if age in range(0, 30, 1):
@@ -49,18 +49,21 @@ def user_input_features():
   elif age in range(80, 101, 1):
     factor_age = 6
   st.text("\n")
+
   st.write("What is your sex?") 
   sex = st.selectbox("(Male or Female", ["Male", "Female"], key = "e")
-  st.write("You selected this option:", sex)
+  sex_str = 'You selected this option: ' + str(sex)
+  st.caption(sex_str)
 
   bin_sex = 0
   if sex == "Male":
     bin_sex= 1
+
   st.text("\n")
   st.write("Are you a heavy smoker?") 
   st.caption("A heavy smoker is someone who has smoked over 100 cigarettes in their lifetime")
-  smoke = st.selectbox("Yes or No", ["Yes", "No"], key = "a")
-  st.write("You selected this option:",smoke)
+  smoke = st.selectbox("Yes or No", ["No", "Yes"], key = "a")
+  st.caption("You selected this option: " + str(smoke))
 
   bin_smoke = 0
   if smoke == "Yes":
@@ -69,8 +72,8 @@ def user_input_features():
   st.text("\n")
   st.write("Are you a heavy drinker?")
   st.caption("A heavy drinker is someone how drinks greater than 14 drinks per week as a man, and greater than 7 drinks per week as a women") 
-  alc = st.selectbox("Yes or No", ["Yes", "No"], key = "b")
-  st.write("You selected this option:",alc)
+  alc = st.selectbox("Yes or No", ["No", "Yes"], key = "b")
+  st.caption("You selected this option: " + str(alc))
 
   bin_alc = 0
   if alc == "Yes":
@@ -78,15 +81,17 @@ def user_input_features():
   st.text("\n")
   st.write("Of the last 30 days, how many have you experienced physical pain") 
   physical = st.slider('', 0, 30, 15, key = "1")
-  st.write("You selected this option:", physical)
+  st.caption("You selected this option: " + str(physical))
+
   st.text("\n")
   st.write("Of the last 30 days, how many would you consider \'bad\' days mentally?") 
   mental = st.slider('', 0, 30, 15, key = "2")
-  st.write("You selected this option:", mental)
+  st.caption("You selected this option: " + str(mental))
+
   st.text("\n")
   st.write("Have you exercised in the past 30 days?") 
-  exercise = st.selectbox("(Yes or No)", ["Yes", "No"], key = "g")
-  st.write("You selected this option:", exercise)  
+  exercise = st.selectbox("(Yes or No)", ["No", "Yes"], key = "g")
+  st.caption("You selected this option: " + str(exercise))  
 
   bin_exercise = 0
   if exercise == "Yes":
@@ -94,11 +99,11 @@ def user_input_features():
   st.text("\n")
   st.write("How much do you sleep in a day (on avg):") 
   sleep = st.slider('', 0, 24, 12)
-  st.write("You selected this option:", sleep) 
+  st.write("You selected this option: " + str(sleep)) 
   st.text("\n")
   st.write("Have you ever had a stroke?") 
-  stroke = st.selectbox("(Yes or No", ["Yes", "No"], key = "c")
-  st.write("You selected this option:", stroke)
+  stroke = st.selectbox("(Yes or No", ["No", "Yes"], key = "c")
+  st.caption("You selected this option: " + str(stroke))
   
   bin_stroke = 0
   if stroke == "Yes":
@@ -107,8 +112,8 @@ def user_input_features():
 
   st.text("\n")
   st.write("Have you ever been told you are diabetic?") 
-  diabetes = st.selectbox("(Yes or No)", ["Yes", "No"], key = "f")
-  st.write("You selected this option:", diabetes)  
+  diabetes = st.selectbox("(Yes or No)", ["No", "Yes"], key = "f")
+  st.caption("You selected this option: " + str(diabetes))  
   
   bin_diabetes = 0
   if diabetes == "Yes":
@@ -118,16 +123,16 @@ def user_input_features():
 
   st.text("\n")
   st.write("Have you ever been told you have asthma?") 
-  asthma = st.selectbox("(Yes or No)", ["Yes", "No"], key = "h")
-  st.write("You selected this option:", asthma)  
+  asthma = st.selectbox("(Yes or No)", ["No", "Yes"], key = "h")
+  st.caption("You selected this option: " + str(asthma))  
 
   bin_asthma = 0
   if asthma == "Yes":
     bin_asthma = 1
   st.text("\n")
   st.write("Have you ever been told you have kidney disease?") 
-  kidney = st.selectbox("(Yes or No)", ["Yes", "No"], key = "i")
-  st.write("You selected this option:", kidney)
+  kidney = st.selectbox("(Yes or No)", ["No", "Yes"], key = "i")
+  st.caption("You selected this option: " + str(kidney))
 
   bin_kidney = 0
   if kidney == "Yes":
