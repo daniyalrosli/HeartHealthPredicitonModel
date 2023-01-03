@@ -6,73 +6,71 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 import imblearn.over_sampling
+
+# Filter warnings
 warnings.filterwarnings('ignore')
 
+# Add a header to the app
 st.header("Asian Heart Disease Risk Calculator")
 
-
-##Loading Data
+# Load the data
 df = pd.read_csv('heart_2020_cleaned.csv')
 data = df
 
-
-st.write("Here is a small look at the data set we used:")
-st.write(data.head(20))
-
-
+# Define a function to get user input
 def user_input_features():
   
   st.write("Please fill out the questionnaire below to see if you are at risk of diabetes:")
 
-  st.write("""Enter BMI:""") 
+  st.write("Enter BMI:") 
   BMI = st.slider('', 0.0, 110.0, 55.0, key = "l")
-  st.write("""You selected this option:""",BMI)
+  st.write("You selected this option:",BMI)
 
-  st.write("""Have you smoked over 100 cigarettes in your lifetime?""") 
+  st.write("Have you smoked over 100 cigarettes in your lifetime?") 
   smoke = st.selectbox("(Yes or No", ["Yes", "No"], key = "a")
-  st.write("""You selected this option:""",smoke)
+  st.write("You selected this option:",smoke)
 
   bin_smoke = 0
   if smoke == "Yes":
     bin_smoke = 1
     
 
-  st.write("""Are you a heavy drinker? (>14 drinks per week for men, >7 drinks per week for women)""") 
-  alc = st.selectbox("(Yes or No", ["Yes", "No"], key = "b")
-  st.write("""You selected this option:""",alc)
+  st.write("Are you a heavy drinker? (>14 drinks per week for men, >7 drinks per week for women)") 
+  alc = st.selectbox("Yes or No", ["Yes", "No"], key = "b")
+  st.write("You selected this option:",alc)
 
   bin_alc = 0
   if alc == "Yes":
     bin_alc = 1
 
-  st.write("""Have you ever had a stroke?""") 
+  st.write("Have you ever had a stroke?") 
   stroke = st.selectbox("(Yes or No", ["Yes", "No"], key = "c")
-  st.write("""You selected this option:""", stroke)
+  st.write("You selected this option:", stroke)
   
   bin_stroke = 0
   if stroke == "Yes":
     bin_stroke = 1
   
-  st.write("""Of the last 30 days, how many have you expereinced physical pain""") 
+  st.write("Of the last 30 days, how many have you expereinced physical pain") 
   physical = st.slider('', 0, 30, 15, key = "1")
-  st.write("""You selected this option:""", physical)
+  st.write("You selected this option:", physical)
 
 
-  st.write("""Of the last 30 days, how many would you consider \'bad\' days mentally?""") 
+  st.write("Of the last 30 days, how many would you consider \'bad\' days mentally?") 
   mental = st.slider('', 0, 30, 15, key = "2")
-  st.write("""You selected this option:""", mental)
+  st.write("You selected this option:", mental)
 
-  st.write("""What is your sex?""") 
+  st.write("What is your sex?") 
   sex = st.selectbox("(Male or Female", ["Male", "Female"], key = "e")
-  st.write("""You selected this option:""", sex)
+  st.write("You selected this option:", sex)
 
   bin_sex = 0
   if sex == "Male":
     bin_sex= 1
 
-  st.write("""9. Enter your age:""") 
+  st.write("9. Enter your age:") 
   age = st.slider('', 0, 100, 50)
-  st.write("""You selected this option:""", age)
+  st.write("You selected this option:", age)
 
   factor_age = 0
   if age in range(0, 30, 1):
@@ -90,37 +88,37 @@ def user_input_features():
   elif age in range(80, 101, 1):
     factor_age = 6
   
-  st.write("""10. Have you ever been told you are diabetic?""") 
+  st.write("10. Have you ever been told you are diabetic?") 
   diabetes = st.selectbox("(Yes or No)", ["Yes", "No"], key = "f")
-  st.write("""You selected this option:""", diabetes)  
+  st.write("You selected this option:", diabetes)  
   
   bin_diabetes = 0
   if diabetes == "Yes":
     bin_diabetes = 1
 
-  st.write("""Have you exercised in the past 30 days?""") 
+  st.write("Have you exercised in the past 30 days?") 
   exercise = st.selectbox("(Yes or No)", ["Yes", "No"], key = "g")
-  st.write("""You selected this option:""", exercise)  
+  st.write("You selected this option:", exercise)  
 
   bin_exercise = 0
   if exercise == "Yes":
     bin_exercise = 1
 
-  st.write("""How much do you sleep in a day (on avg):""") 
+  st.write("How much do you sleep in a day (on avg):") 
   sleep = st.slider('', 0, 24, 12)
-  st.write("""You selected this option:""", sleep) 
+  st.write("You selected this option:", sleep) 
   
-  st.write("""Have you ever been told you have asthma?""") 
+  st.write("Have you ever been told you have asthma?") 
   asthma = st.selectbox("(Yes or No)", ["Yes", "No"], key = "h")
-  st.write("""You selected this option:""", asthma)  
+  st.write("You selected this option:", asthma)  
 
   bin_asthma = 0
   if asthma == "Yes":
     bin_asthma = 1
 
-  st.write("""Have you ever been told you have kidney disease?""") 
+  st.write("Have you ever been told you have kidney disease?") 
   kidney = st.selectbox("(Yes or No)", ["Yes", "No"], key = "i")
-  st.write("""You selected this option:""", kidney)
+  st.write("You selected this option:", kidney)
 
   bin_kidney = 0
   if kidney == "Yes":
@@ -140,8 +138,7 @@ def user_input_features():
   return features_user
 
 
-
-##Convering data to numerical inputs
+# Replace categorical variables with numerical values
 data.Smoking.replace(('Yes','No'), (1,0), inplace = True)
 data.HeartDisease.replace(('Yes','No'), (1,0), inplace = True)
 data.AlcoholDrinking.replace(('Yes','No'), (1,0), inplace = True)
@@ -159,26 +156,33 @@ data.Race.replace(('White', 'Black', 'Asian', 'American Indian/Alaskan Native', 
 
 column = ['Race','BMI','Smoking','AlcoholDrinking','Stroke','PhysicalHealth','MentalHealth','Sex','Diabetic','PhysicalActivity','SleepTime','AgeCategory','Asthma','KidneyDisease']
 
+# Split the data into training and testing sets
 X = data[column]
 Y = data.HeartDisease
 
+# Use SMOTE to oversample the minority class
 from imblearn.over_sampling import SMOTE
 sm = SMOTE(random_state = 0)
-sm.fit(X,Y)
-x_resem, y_resem = sm.fit_resample(X, Y)
-st.header('Model')
+X_resampled, Y_resampled = sm.fit_resample(X, Y)
 
+# Split the resampled data into training and testing sets
 from sklearn.model_selection import train_test_split
-xtrain,xtest,ytrain,ytest = train_test_split(x_resem, y_resem, test_size = 0.2, random_state = 0)
+X_train, X_test, Y_train, Y_test = train_test_split(X_resampled, Y_resampled, test_size = 0.2, random_state = 0)
 
+# Train a Decision Tree classifier on the training data
 from sklearn.tree import DecisionTreeClassifier
 model = DecisionTreeClassifier()
-model.fit(xtrain, ytrain)
+model.fit(X_train, Y_train)
 
+# Use the model to make predictions on the user's input
 features_users = user_input_features()
 prediction = model.predict(features_users)
+prediction_proba = model.predict_proba(features_users)
+
+# Display the prediction and probability to the user
 st.subheader('Prediction :')
 df1=pd.DataFrame(prediction,columns=['0'])
 df1.loc[df1['0'] == 0, 'Chances of Heart Disease'] = 'No'
 df1.loc[df1['0'] == 1, 'Chances of Heart Disease'] = 'Yes'
 st.write(df1)
+

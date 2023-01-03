@@ -4,6 +4,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 
+
+sns.set(rc={'axes.facecolor':'#F5F6F4', 'figure.facecolor':'#F5F6F4'})
+
 df = pd.read_csv('heart_2020_cleaned.csv')
 df_yes = df[df["HeartDisease"] == "Yes"]
 df_no = df[df["HeartDisease"] == "No"]
@@ -76,7 +79,6 @@ with tab5:
     st. write("Finally, smoking can also increase the risk of blood clots, which can block the flow of blood to the heart and cause a heart attack. The chemicals in cigarette smoke can cause the blood to become thicker and stickier, making it more likely to form clots. Blood clots can also form in the arteries of the heart, leading to a condition called coronary artery disease, which can cause a heart attack. Smokers are twice as likely to develop blood clots compared to non-smokers.")
     st. write("In conclusion, the evidence is clear that smoking is a major risk factor for heart disease. Quitting smoking can significantly reduce the risk of developing this condition, and is one of the best things that a person can do for their heart health. If you are a smoker, it is never too late to quit and improve your heart health. The benefits of quitting smoking start almost immediately and increase over time, so don't wait to take this important step for your health.")
     
-    sns.set(style = "darkgrid")
     g = sns.FacetGrid(df, col = "HeartDisease", col_wrap = 2)
     g.map(sns.histplot, "Smoking", stat = 'percent', color = "#C27070")
     st.pyplot(g)
@@ -100,8 +102,8 @@ with tab7:
     st. write("In addition to these differences, there are also some unique risk factors for heart disease in women. Pregnancy complications, such as pre-eclampsia and gestational diabetes, can increase the risk of heart disease in women. Women who have undergone menopause are also at increased risk for heart disease, as the loss of estrogen can lead to changes in the blood vessels and an increased risk of heart attack.")
     st. write("In conclusion, gender can have a significant effect on heart disease. It is important for both men and women to be aware of their risk factors and to take steps to reduce their risk, such as maintaining a healthy diet and lifestyle, quitting smoking, and getting regular medical check-ups. It is also important for healthcare providers to be aware of the unique risk factors and symptoms of heart disease in women and to provide appropriate care and treatment.")
 
-    g = sns.FacetGrid(df, col = "Sex", hue = "AgeCategory")
-    g.map(sns.histplot, "HeartDisease", stat = 'percent', color = ["#C27070"], multiple="dodge")#, "#3d8f8f"]) 
+    g = sns.FacetGrid(df, col = "Sex", hue = "AgeCategory", palette="rocket")
+    g.map(sns.histplot, "HeartDisease",stat = 'percent',  multiple="dodge") 
     g.add_legend()
     st.pyplot(g)
     
