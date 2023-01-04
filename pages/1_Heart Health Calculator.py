@@ -115,7 +115,7 @@ def user_input_features():
   st.markdown(sleep_q, unsafe_allow_html=True)
   st.caption('Slider is in hours')
   sleep = st.slider('', 0, 24, 12)
-  st.write("You selected this option: " + str(sleep)) 
+  st.caption("You selected this option: " + str(sleep)) 
   st.text("\n")
 
   stroke_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Have you ever had a stroke?</p>'
@@ -170,7 +170,6 @@ def user_input_features():
 
   features_user = np.array([[bin_race, BMI, bin_smoke, bin_alc, bin_stroke, physical, mental, bin_sex, bin_diabetes, bin_exercise, sleep, factor_age, bin_asthma, bin_kidney]])
   features_user_2 = np.array([[BMI, bin_smoke, bin_alc, bin_stroke, physical, mental, bin_sex, bin_diabetes, bin_exercise, sleep, factor_age, bin_asthma, bin_kidney]])
-  st.write(features_user)
   return features_user, features_user_2
 
 

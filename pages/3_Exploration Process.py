@@ -109,15 +109,20 @@ st.write('Lets see the distribution of data now:', y_resem.value_counts())
 st.header('Model Building')
 
 st.write('We build our model using Scikit-Learn, the model we chose to use was a DecisionTreeClassifier.')
-from sklearn.model_selection import train_test_split
-xtrain,xtest,ytrain,ytest = train_test_split(x_resem, y_resem, test_size = 0.2, random_state = 0)
+st.markdown("\n")
 st.write('We first split the data into xtrain, xtest, ytrain, ytest using a test size of 0.2.')
-st.write('After fitting the model to our data we ran a couple tests on effectivness of the model.')
+with st.echo():
+    from sklearn.model_selection import train_test_split
+    xtrain,xtest,ytrain,ytest = train_test_split(x_resem, y_resem, test_size = 0.2, random_state = 0)
+st.write("Next, we built our model by importing DecisionTreeClassifier and fitting it to our data")
 
-from sklearn.tree import DecisionTreeClassifier
-model = DecisionTreeClassifier()
-model.fit(xtrain, ytrain)
-model.score(xtest,ytest)
+with st.echo():
+    from sklearn.tree import DecisionTreeClassifier
+    model = DecisionTreeClassifier()
+    model.fit(xtrain, ytrain)
+    model.score(xtest,ytest)
+
+st.write('After fitting the model to our data we ran a couple tests on effectivness of the model. Below, you can see a confusion matrix as well as tests on the accuracy and precision of the model')
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, f1_score, recall_score
 
 st.write("Confusion Matrix")
