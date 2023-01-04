@@ -11,25 +11,29 @@ import imblearn.over_sampling
 warnings.filterwarnings('ignore')
 
 # Add a header to the app
-st.header("Asian Heart Disease Risk Calculator")
-
+st.title("Asian Heart Disease Risk Calculator")
+st.caption("Please fill out the questionnaire below to see if you are at risk of diabetes.")
 # Load the data
 df = pd.read_csv('data/heart_2020_cleaned.csv')
 data = df
 
+st.markdown("""---""") 
+
 # Define a function to get user input
 def user_input_features():
 
-  st.caption("Please fill out the questionnaire below to see if you are at risk of diabetes.")
-
-  st.write("Enter BMI:") 
+  BMI_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Enter BMI:</p>'
+  st.markdown(BMI_q, unsafe_allow_html=True)
   st.caption("Body mass index (BMI) is calculated by dividing an individual's weight in kilograms by their height in meters squared. For example, if an individual weighs 70 kilograms and is 1.75 meters tall, their BMI would be calculated as follows:")
   st.caption("BMI = 70 / (1.75 x 1.75) = 22.9")
   BMI = st.slider('', 0.0, 110.0, 55.0, key = "l")
   st.caption("You selected this option: " + str(BMI))
 
   st.text("\n")
-  st.write("Enter your age:") 
+  age_q = '<p style="font-family:Sans-Serif; font-size: 20px;">How old are you?</p>'
+
+  st.markdown(age_q, unsafe_allow_html=True)
+  st.caption('Slider is in years')
   age = st.slider('', 0, 100, 50)
   st.caption("You selected this option: " + str(age))
 
@@ -50,7 +54,8 @@ def user_input_features():
     factor_age = 6
   st.text("\n")
 
-  st.write("What is your sex?") 
+  sex_q = '<p style="font-family:Sans-Serif; font-size: 20px;">What is your sex?</p>'
+  st.markdown(sex_q, unsafe_allow_html=True)
   sex = st.selectbox("(Male or Female", ["Male", "Female"], key = "e")
   sex_str = 'You selected this option: ' + str(sex)
   st.caption(sex_str)
@@ -60,7 +65,8 @@ def user_input_features():
     bin_sex= 1
 
   st.text("\n")
-  st.write("Are you a heavy smoker?") 
+  smoke_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Are you a heavy smoker?</p>'
+  st.markdown(smoke_q, unsafe_allow_html=True)
   st.caption("A heavy smoker is someone who has smoked over 100 cigarettes in their lifetime.")
   smoke = st.selectbox("Yes or No", ["No", "Yes"], key = "a")
   st.caption("You selected this option: " + str(smoke))
@@ -70,7 +76,9 @@ def user_input_features():
     bin_smoke = 1
     
   st.text("\n")
-  st.write("Are you a heavy drinker?")
+  alc_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Are you a heavy drinker?</p>'
+  st.markdown(alc_q, unsafe_allow_html=True)
+  
   st.caption("A heavy drinker is someone how drinks greater than 14 drinks per week as a man, and greater than 7 drinks per week as a woman.") 
   alc = st.selectbox("Yes or No", ["No", "Yes"], key = "b")
   st.caption("You selected this option: " + str(alc))
@@ -78,30 +86,40 @@ def user_input_features():
   bin_alc = 0
   if alc == "Yes":
     bin_alc = 1
+
+
   st.text("\n")
-  st.write("Of the last 30 days, roughly how many have you experienced physical pain or illness?") 
+  phys_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Of the last 30 days, roughly how many have you experienced physical pain or illness?</p>'
+  st.markdown(phys_q, unsafe_allow_html=True)
   physical = st.slider('', 0, 30, 15, key = "1")
   st.caption("You selected this option: " + str(physical))
 
   st.text("\n")
-  st.write("Of the last 30 days, roughly how many would you consider \'bad\' days mentally?") 
+  men_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Of the last 30 days, roughly how many would you consider \'bad\' days mentally?</p>'
+  st.markdown(men_q, unsafe_allow_html=True)
   mental = st.slider('', 0, 30, 15, key = "2")
   st.caption("You selected this option: " + str(mental))
 
   st.text("\n")
-  st.write("Have you exercised in the past 30 days?") 
+  ex_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Have you exercised in the past 30 days?</p>'
+  st.markdown(ex_q, unsafe_allow_html=True)
   exercise = st.selectbox("(Yes or No)", ["No", "Yes"], key = "g")
   st.caption("You selected this option: " + str(exercise))  
 
   bin_exercise = 0
   if exercise == "Yes":
     bin_exercise = 1
+
   st.text("\n")
-  st.write("How many hours do you sleep in a day (on avg):") 
+  sleep_q = '<p style="font-family:Sans-Serif; font-size: 20px;">How long do you sleep in a day on average?</p>'
+  st.markdown(sleep_q, unsafe_allow_html=True)
+  st.caption('Slider is in hours')
   sleep = st.slider('', 0, 24, 12)
   st.write("You selected this option: " + str(sleep)) 
   st.text("\n")
-  st.write("Have you ever had a stroke?") 
+
+  stroke_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Have you ever had a stroke?</p>'
+  st.markdown(stroke_q, unsafe_allow_html=True)
   stroke = st.selectbox("(Yes or No", ["No", "Yes"], key = "c")
   st.caption("You selected this option: " + str(stroke))
   
@@ -111,7 +129,8 @@ def user_input_features():
   
 
   st.text("\n")
-  st.write("Have you ever been told you are diabetic?") 
+  db_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Have you ever been told you\'re diabetic?</p>'
+  st.markdown(db_q, unsafe_allow_html=True)
   diabetes = st.selectbox("(Yes or No)", ["No", "Yes"], key = "f")
   st.caption("You selected this option: " + str(diabetes))  
   
@@ -122,7 +141,8 @@ def user_input_features():
 
 
   st.text("\n")
-  st.write("Have you ever been told you have asthma?") 
+  as_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Have you ever been told you have asthma?</p>'
+  st.markdown(as_q, unsafe_allow_html=True)
   asthma = st.selectbox("(Yes or No)", ["No", "Yes"], key = "h")
   st.caption("You selected this option: " + str(asthma))  
 
@@ -130,7 +150,8 @@ def user_input_features():
   if asthma == "Yes":
     bin_asthma = 1
   st.text("\n")
-  st.write("Have you ever been told you have kidney disease?") 
+  kd_q = '<p style="font-family:Sans-Serif; font-size: 20px;">Have you ever been told you have kidney disease?</p>'
+  st.markdown(kd_q, unsafe_allow_html=True)
   kidney = st.selectbox("(Yes or No)", ["No", "Yes"], key = "i")
   st.caption("You selected this option: " + str(kidney))
 
