@@ -8,4 +8,5 @@ https://suvand0-hearthealthpredicitonmodel-homepage-y23qm0.streamlit.app/
 
 - [@SuvanD0](https://github.com/SuvanD0)
 - [@SohamGunturu](https://github.com/SohamGunturu)
+- [@Sugath-S](https://github.com/Sugath-S)
 
