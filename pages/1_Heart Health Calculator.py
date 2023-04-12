@@ -15,7 +15,7 @@ st.header("Asian Heart Disease Risk Calculator")
 
 
 ##Loading Data
-df = pd.read_csv('heart_2020_cleaned.csv')
+df = pd.read_csv('data/heart_2020_cleaned.csv')
 newdf = df
 
 st.write("Our data is below:")
