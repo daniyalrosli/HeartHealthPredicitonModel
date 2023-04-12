@@ -15,7 +15,7 @@ st.header("Asian Heart Disease Risk Calculator")
 
 
 ##Loading Data
-df = pd.read_csv('data/heart_2020_cleaned.csv')
+df = pd.read_csv('data\heart_2020_cleaned.csv')
 newdf = df
 
 st.write("Our data is below:")
@@ -148,31 +148,33 @@ user[discrete2] = enc.transform(user[discrete2])
 ##st.write(user)
 ##st.write(newdf)
 
-
-
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score
 
-# Splitting data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(newdf, y, test_size=0.1, random_state=12)
+from sklearn.metrics import precision_score,recall_score
+from sklearn.metrics import f1_score
 
-# Creating feature matrix (param) and target vector (target)
-param = newdf.iloc[:, 0:17].values
-target = newdf.iloc[:, [0]].values
 
-# Training ExtraTreesClassifier
+##X_train, X_test, y_train, y_test=train_test_split(newdf,y,test_size=0.1,random_state=12)
+param = newdf.iloc[:,0:17].values
+target = newdf.iloc[:,[0]].values
+
+#Testing
+##st.write(param)
+##st.write(target)
+
+
 model = ExtraTreesClassifier()
 model.fit(param, target)
 
-# Making predictions using ExtraTreesClassifier
 prediction = model.predict(user)
 st.subheader('Prediction using ExtraTreesClassifier:')
-df1 = pd.DataFrame(prediction, columns=['0'])
+df1=pd.DataFrame(prediction,columns=['0'])
 df1.loc[df1['0'] == 0, 'Chances of Heart Disease'] = 'No'
 df1.loc[df1['0'] == 1, 'Chances of Heart Disease'] = 'Yes'
 st.write(df1)
@@ -181,14 +183,12 @@ prediction_proba = model.predict_proba(user)
 st.subheader('Prediction Probability in % :')
 st.write(prediction_proba * 100)
 
-# Training RandomForestClassifier
 model = RandomForestClassifier()
 model.fit(param, target)
 
-# Making predictions using RandomForestClassifier
 prediction = model.predict(user)
-st.subheader('Prediction using RandomForestClassifier:')
-df1 = pd.DataFrame(prediction, columns=['0'])
+st.subheader('Prediction using RandomForestClassifer:')
+df1=pd.DataFrame(prediction,columns=['0'])
 df1.loc[df1['0'] == 0, 'Chances of Heart Disease'] = 'No'
 df1.loc[df1['0'] == 1, 'Chances of Heart Disease'] = 'Yes'
 st.write(df1)
